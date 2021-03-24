@@ -1,18 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace MetricsManager.Controllers
+namespace WeatherForecast.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class TemperatureInfoController : ControllerBase
     {
         private readonly List<TemperatureInfo> _valueHolder;
-
         public TemperatureInfoController(List<TemperatureInfo> valueHolder)
         {
             _valueHolder = valueHolder;
@@ -27,7 +24,7 @@ namespace MetricsManager.Controllers
         [HttpGet("read")]
         public IActionResult Read([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
         {
-            startDate = startDate.HasValue? startDate : DateTime.MinValue;
+            startDate = startDate.HasValue ? startDate : DateTime.MinValue;
             endDate = endDate.HasValue ? endDate : DateTime.MaxValue;
 
             var items = from TemperatureInfo in _valueHolder
@@ -42,7 +39,7 @@ namespace MetricsManager.Controllers
         /// <param name="temperature">Температура</param>
         /// <param name="date">Время</param>
         /// <returns>Код подтверждения обработки запроса</returns>
-        [HttpPost ("save")]
+        [HttpPost("save")]
         public IActionResult Save([FromQuery] int? temperature, DateTime? date)
         {
             if (temperature != null && date != null)
@@ -87,7 +84,7 @@ namespace MetricsManager.Controllers
         /// <param name="date">Время</param>
         /// <returns>Код подтверждения обработки запроса</returns>
         [HttpPut("update")]
-        public IActionResult Update([FromQuery]  int? temperature, DateTime? date)
+        public IActionResult Update([FromQuery] int? temperature, DateTime? date)
         {
             if (!date.HasValue && !temperature.HasValue)
             {
@@ -98,7 +95,7 @@ namespace MetricsManager.Controllers
                 var updatedTemperature = _valueHolder.Single(TemperatureInfo => TemperatureInfo.Date == date.Value);
                 updatedTemperature.Temperature = temperature.Value;
             }
-            catch(Exception)    //В случае отсутствия значений в указанное время
+            catch (Exception)    //В случае отсутствия значений в указанное время
             {
                 return BadRequest();
             }
