@@ -27,3 +27,5 @@ C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManager\obj\Debug\net5.0\ref\MetricsManager.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManager\obj\Debug\net5.0\MetricsManager.pdb
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManager\obj\Debug\net5.0\MetricsManager.genruntimeconfig.cache
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManager\bin\Debug\net5.0\Percentile.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManager\bin\Debug\net5.0\Percentile.pdb

@@ -19,4 +19,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MetricsManager\MetricsManager.csproj" />
+    <ProjectReference Include="..\Percentile\Percentile.csproj" />
+  </ItemGroup>
+
 </Project>

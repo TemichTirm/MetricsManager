@@ -98,3 +98,17 @@ C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\obj\Debug\net5.0\ref\MetricsManagerTests.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\obj\Debug\net5.0\MetricsManagerTests.pdb
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\obj\Debug\net5.0\MetricsManagerTests.genruntimeconfig.cache
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\MetricsManager.deps.json
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\MetricsManager.runtimeconfig.json
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\MetricsManager.runtimeconfig.dev.json
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\appsettings.Development.json
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\appsettings.json
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\MetricsManager.exe
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\Microsoft.OpenApi.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\MetricsManager.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\Percentile.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\MetricsManager.pdb
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\Percentile.pdb
