@@ -1,5 +1,5 @@
-using Enums;
 using MetricsAgent.Controllers;
+using MetricsCommon;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using Xunit;

@@ -76,14 +76,14 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Percentile/1.0.0": {
+      "MetricsCommon/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "compile": {
-          "bin/placeholder/Percentile.dll": {}
+          "bin/placeholder/MetricsCommon.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Percentile.dll": {}
+          "bin/placeholder/MetricsCommon.dll": {}
         }
       }
     }
@@ -196,15 +196,15 @@
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
     },
-    "Percentile/1.0.0": {
+    "MetricsCommon/1.0.0": {
       "type": "project",
-      "path": "../Percentile/Percentile.csproj",
-      "msbuildProject": "../Percentile/Percentile.csproj"
+      "path": "../MetricsCommon/MetricsCommon.csproj",
+      "msbuildProject": "../MetricsCommon/MetricsCommon.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "Percentile >= 1.0.0",
+      "MetricsCommon >= 1.0.0",
       "Swashbuckle.AspNetCore >= 5.6.3"
     ]
   },
@@ -243,8 +243,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\Temich\\source\\repos\\Web API MicroService\\MetricsManager\\MetricsManager\\Percentile\\Percentile.csproj": {
-              "projectPath": "C:\\Users\\Temich\\source\\repos\\Web API MicroService\\MetricsManager\\MetricsManager\\Percentile\\Percentile.csproj"
+            "C:\\Users\\Temich\\source\\repos\\Web API MicroService\\MetricsManager\\MetricsManager\\MetricsCommon\\MetricsCommon.csproj": {
+              "projectPath": "C:\\Users\\Temich\\source\\repos\\Web API MicroService\\MetricsManager\\MetricsManager\\MetricsCommon\\MetricsCommon.csproj"
             }
           }
         }

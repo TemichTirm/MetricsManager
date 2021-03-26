@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using Enums;
+using MetricsCommon;
 
 
 namespace MetricsManager.Controllers

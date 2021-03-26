@@ -103,12 +103,12 @@ C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgentTests\bin\Debug\net5.0\zh-Hant\Microsoft.TestPlatform.CrossPlatEngine.resources.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgentTests\bin\Debug\net5.0\zh-Hant\Microsoft.VisualStudio.TestPlatform.Common.resources.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgentTests\bin\Debug\net5.0\MetricsAgent.dll
-C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgentTests\bin\Debug\net5.0\Percentile.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgentTests\bin\Debug\net5.0\MetricsAgent.pdb
-C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgentTests\bin\Debug\net5.0\Percentile.pdb
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgentTests\obj\Debug\net5.0\MetricsAgentTests.csprojAssemblyReference.cache
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgentTests\obj\Debug\net5.0\MetricsAgentTests.csproj.CopyComplete
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgentTests\obj\Debug\net5.0\MetricsAgentTests.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgentTests\obj\Debug\net5.0\ref\MetricsAgentTests.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgentTests\obj\Debug\net5.0\MetricsAgentTests.pdb
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgentTests\obj\Debug\net5.0\MetricsAgentTests.genruntimeconfig.cache
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgentTests\bin\Debug\net5.0\MetricsCommon.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgentTests\bin\Debug\net5.0\MetricsCommon.pdb

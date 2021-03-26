@@ -10,7 +10,6 @@
         "dependencies": {
           "MetricsManager": "1.0.0",
           "Microsoft.NET.Test.Sdk": "16.7.1",
-          "Percentile": "1.0.0",
           "coverlet.collector": "1.3.0",
           "xunit": "2.4.1",
           "xunit.runner.visualstudio": "2.4.3"
@@ -1136,18 +1135,18 @@
         }
       },
       "xunit.runner.visualstudio/2.4.3": {},
+      "MetricsCommon/1.0.0": {
+        "runtime": {
+          "MetricsCommon.dll": {}
+        }
+      },
       "MetricsManager/1.0.0": {
         "dependencies": {
-          "Percentile": "1.0.0",
+          "MetricsCommon": "1.0.0",
           "Swashbuckle.AspNetCore": "5.6.3"
         },
         "runtime": {
           "MetricsManager.dll": {}
-        }
-      },
-      "Percentile/1.0.0": {
-        "runtime": {
-          "Percentile.dll": {}
         }
       }
     }
@@ -1837,12 +1836,12 @@
       "path": "xunit.runner.visualstudio/2.4.3",
       "hashPath": "xunit.runner.visualstudio.2.4.3.nupkg.sha512"
     },
-    "MetricsManager/1.0.0": {
+    "MetricsCommon/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Percentile/1.0.0": {
+    "MetricsManager/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

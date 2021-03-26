@@ -1725,7 +1725,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
-          "Percentile": "1.0.0",
+          "MetricsCommon": "1.0.0",
           "Swashbuckle.AspNetCore": "5.6.3"
         },
         "compile": {
@@ -1738,14 +1738,14 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Percentile/1.0.0": {
+      "MetricsCommon/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "compile": {
-          "bin/placeholder/Percentile.dll": {}
+          "bin/placeholder/MetricsCommon.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Percentile.dll": {}
+          "bin/placeholder/MetricsCommon.dll": {}
         }
       }
     }
@@ -5823,10 +5823,10 @@
       "path": "../MetricsAgent/MetricsAgent.csproj",
       "msbuildProject": "../MetricsAgent/MetricsAgent.csproj"
     },
-    "Percentile/1.0.0": {
+    "MetricsCommon/1.0.0": {
       "type": "project",
-      "path": "../Percentile/Percentile.csproj",
-      "msbuildProject": "../Percentile/Percentile.csproj"
+      "path": "../MetricsCommon/MetricsCommon.csproj",
+      "msbuildProject": "../MetricsCommon/MetricsCommon.csproj"
     }
   },
   "projectFileDependencyGroups": {

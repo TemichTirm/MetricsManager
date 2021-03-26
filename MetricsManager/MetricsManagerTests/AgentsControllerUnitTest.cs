@@ -1,8 +1,6 @@
-using Enums;
 using MetricsManager;
 using MetricsManager.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using Xunit;
 

@@ -1137,16 +1137,16 @@
       "xunit.runner.visualstudio/2.4.3": {},
       "MetricsAgent/1.0.0": {
         "dependencies": {
-          "Percentile": "1.0.0",
+          "MetricsCommon": "1.0.0",
           "Swashbuckle.AspNetCore": "5.6.3"
         },
         "runtime": {
           "MetricsAgent.dll": {}
         }
       },
-      "Percentile/1.0.0": {
+      "MetricsCommon/1.0.0": {
         "runtime": {
-          "Percentile.dll": {}
+          "MetricsCommon.dll": {}
         }
       }
     }
@@ -1841,7 +1841,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Percentile/1.0.0": {
+    "MetricsCommon/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

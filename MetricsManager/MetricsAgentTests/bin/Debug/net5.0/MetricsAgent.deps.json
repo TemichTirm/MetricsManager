@@ -33,7 +33,7 @@
     ".NETCoreApp,Version=v5.0": {
       "MetricsAgent/1.0.0": {
         "dependencies": {
-          "Percentile": "1.0.0",
+          "MetricsCommon": "1.0.0",
           "Swashbuckle.AspNetCore": "5.6.3",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "5.0.0.0",
@@ -385,12 +385,12 @@
           "lib/netcoreapp3.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {}
         }
       },
-      "Percentile/1.0.0": {
+      "MetricsCommon/1.0.0": {
         "runtime": {
-          "Percentile.dll": {}
+          "MetricsCommon.dll": {}
         },
         "compile": {
-          "Percentile.dll": {}
+          "MetricsCommon.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/5.0.0.0": {
@@ -2141,7 +2141,7 @@
       "path": "swashbuckle.aspnetcore.swaggerui/5.6.3",
       "hashPath": "swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
     },
-    "Percentile/1.0.0": {
+    "MetricsCommon/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

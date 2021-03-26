@@ -18,8 +18,6 @@ C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\bin\Debug\net5.0\Percentile.dll
-C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\bin\Debug\net5.0\Percentile.pdb
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\obj\Debug\net5.0\staticwebassets\MetricsAgent.StaticWebAssets.Manifest.cache
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\obj\Debug\net5.0\staticwebassets\MetricsAgent.StaticWebAssets.xml
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\obj\Debug\net5.0\scopedcss\bundle\MetricsAgent.styles.css
@@ -29,3 +27,5 @@ C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\obj\Debug\net5.0\ref\MetricsAgent.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\obj\Debug\net5.0\MetricsAgent.pdb
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\obj\Debug\net5.0\MetricsAgent.genruntimeconfig.cache
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\bin\Debug\net5.0\MetricsCommon.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\bin\Debug\net5.0\MetricsCommon.pdb

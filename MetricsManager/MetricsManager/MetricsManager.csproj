@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Percentile\Percentile.csproj" />
+    <ProjectReference Include="..\MetricsCommon\MetricsCommon.csproj" />
   </ItemGroup>
 
 </Project>

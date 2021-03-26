@@ -109,6 +109,6 @@ C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\MetricsManager.dll
-C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\Percentile.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\MetricsManager.pdb
-C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\Percentile.pdb
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\MetricsCommon.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsManagerTests\bin\Debug\net5.0\MetricsCommon.pdb

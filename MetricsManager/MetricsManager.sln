@@ -5,15 +5,15 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetricsManager", "MetricsManager\MetricsManager.csproj", "{629DA5D0-29C1-4EFE-8491-214C918E2C27}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Percentile", "Percentile\Percentile.csproj", "{6B51E242-4342-48EE-9D04-15AFFE2EE787}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetricsManagerTests", "MetricsManagerTests\MetricsManagerTests.csproj", "{C5D99408-3233-4A7E-A111-40AAA68676A0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast", "WeatherForecast\WeatherForecast.csproj", "{1527ACC4-0D2D-4100-AD41-CA37C814C108}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsAgent", "MetricsAgent\MetricsAgent.csproj", "{8A8049B7-FC7F-4833-B56F-925405C92265}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetricsAgent", "MetricsAgent\MetricsAgent.csproj", "{8A8049B7-FC7F-4833-B56F-925405C92265}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsAgentTests", "MetricsAgentTests\MetricsAgentTests.csproj", "{2214F834-6543-469E-B3F6-4E76AD9C0FAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetricsAgentTests", "MetricsAgentTests\MetricsAgentTests.csproj", "{2214F834-6543-469E-B3F6-4E76AD9C0FAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsCommon", "MetricsCommon\MetricsCommon.csproj", "{7DCBA401-C642-4A82-AB9A-B022A05AEF29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +25,6 @@ Global
 		{629DA5D0-29C1-4EFE-8491-214C918E2C27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{629DA5D0-29C1-4EFE-8491-214C918E2C27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{629DA5D0-29C1-4EFE-8491-214C918E2C27}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B51E242-4342-48EE-9D04-15AFFE2EE787}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B51E242-4342-48EE-9D04-15AFFE2EE787}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B51E242-4342-48EE-9D04-15AFFE2EE787}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B51E242-4342-48EE-9D04-15AFFE2EE787}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C5D99408-3233-4A7E-A111-40AAA68676A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C5D99408-3233-4A7E-A111-40AAA68676A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5D99408-3233-4A7E-A111-40AAA68676A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{2214F834-6543-469E-B3F6-4E76AD9C0FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2214F834-6543-469E-B3F6-4E76AD9C0FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2214F834-6543-469E-B3F6-4E76AD9C0FAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DCBA401-C642-4A82-AB9A-B022A05AEF29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DCBA401-C642-4A82-AB9A-B022A05AEF29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DCBA401-C642-4A82-AB9A-B022A05AEF29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DCBA401-C642-4A82-AB9A-B022A05AEF29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
