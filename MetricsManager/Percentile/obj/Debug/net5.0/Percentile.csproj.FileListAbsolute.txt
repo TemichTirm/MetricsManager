@@ -1,0 +1,12 @@
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\Percentile\bin\Debug\net5.0\Percentile.deps.json
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\Percentile\bin\Debug\net5.0\Percentile.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\Percentile\bin\Debug\net5.0\ref\Percentile.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\Percentile\bin\Debug\net5.0\Percentile.pdb
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\Percentile\obj\Debug\net5.0\Percentile.csprojAssemblyReference.cache
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\Percentile\obj\Debug\net5.0\Percentile.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\Percentile\obj\Debug\net5.0\Percentile.AssemblyInfoInputs.cache
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\Percentile\obj\Debug\net5.0\Percentile.AssemblyInfo.cs
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\Percentile\obj\Debug\net5.0\Percentile.csproj.CoreCompileInputs.cache
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\Percentile\obj\Debug\net5.0\Percentile.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\Percentile\obj\Debug\net5.0\ref\Percentile.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\Percentile\obj\Debug\net5.0\Percentile.pdb

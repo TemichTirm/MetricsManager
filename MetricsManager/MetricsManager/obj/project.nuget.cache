@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ZlhVOznPeTK6HNHhimAvdkdUSh3Qd4hj04oDquD0qGAg1b0dVtuoYh78ospM4G/cLEJcXiW0yJ0XgGFGwiLFcA==",
+  "dgSpecHash": "5kTVs8GJ0aNc6Ap2tA9rzZOEKG+yDCGCWM+Flq6+dGF6UsryNYlcY2QOXgnXQ4YoU5LxlaKup4yGVIZg6Binqw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Temich\\source\\repos\\Web API MicroService\\MetricsManager\\MetricsManager\\MetricsManager\\MetricsManager.csproj",
   "expectedPackageFiles": [
