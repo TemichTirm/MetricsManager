@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using MetricsCommon;
-
+using Microsoft.Extensions.Logging;
 
 namespace MetricsManager.Controllers
 {
@@ -9,6 +9,13 @@ namespace MetricsManager.Controllers
     [ApiController]
     public class CpuMetricsController : ControllerBase
     {
+        private readonly ILogger<CpuMetricsController> _logger;
+        public CpuMetricsController(ILogger<CpuMetricsController> logger)
+        {
+            _logger = logger;
+            _logger.LogDebug(1, "CpuMetricsController created");
+        }
+
         /// <summary>
         /// Возвращает по запросу метрики использования CPU определенного агента в указанный промежуток времени
         /// </summary>
@@ -20,6 +27,7 @@ namespace MetricsManager.Controllers
         public IActionResult GetMetricsFromAgent([FromRoute] int agentId, [FromRoute] TimeSpan fromTime,
             [FromRoute] TimeSpan toTime)
         {
+            _logger.LogTrace(1, $"Query GetCpuMetrics with params: AgentID={agentId}, FromTime={fromTime}, ToTime={toTime}");
             return Ok();
         }
 
@@ -35,6 +43,7 @@ namespace MetricsManager.Controllers
         public IActionResult GetMetricsByPercentileFromAgent([FromRoute] int agentId, [FromRoute] TimeSpan fromTime,
             [FromRoute] TimeSpan toTime, Percentile percentile)
         {
+            _logger.LogTrace($"Query GetCpuMetrics with params: AgentID={agentId}, FromTime={fromTime}, ToTime={toTime}, Percentile={percentile}");
             return Ok();
         }
 
@@ -47,6 +56,7 @@ namespace MetricsManager.Controllers
         [HttpGet("cluster/from/{fromTime}/to/{toTime}")]
         public IActionResult GetMetricsFromAllCluster([FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime)
         {
+            _logger.LogTrace($"Query GetCpuMetrics with params: FromTime={fromTime}, ToTime={toTime}");
             return Ok();
         }
 
@@ -61,6 +71,7 @@ namespace MetricsManager.Controllers
         public IActionResult GetMetricsByPercentileFromAllCluster([FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime,
             [FromRoute] Percentile percentile)
         {
+            _logger.LogTrace($"Query GetCpuMetrics with params: FromTime={fromTime}, ToTime={toTime}, Percentile={percentile}");
             return Ok();
         }
     }

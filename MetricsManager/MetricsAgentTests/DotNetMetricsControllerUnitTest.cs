@@ -1,5 +1,7 @@
 using MetricsAgent.Controllers;
+using MetricsAgent.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 using System;
 using Xunit;
 
@@ -8,12 +10,14 @@ namespace MetricsAgentTests
     public class DotNetMetricsControllerUnitTest
     {
         private DotNetMetricsController controller;
-        private TimeSpan fromTime = TimeSpan.FromSeconds(0);
-        private TimeSpan toTime = TimeSpan.FromSeconds(100);
+        private Mock<IDotNetMetricsRepository> mock;
+        private DateTimeOffset fromTime = new(new(2020, 01, 01));
+        private DateTimeOffset toTime = new(new(2020, 12, 31));
 
         public DotNetMetricsControllerUnitTest()
         {
-            controller = new DotNetMetricsController();
+            mock = new Mock<IDotNetMetricsRepository>();
+            controller = new DotNetMetricsController(mock.Object);
         }
 
         [Fact]
