@@ -20,10 +20,6 @@ namespace MetricsAgent.Controllers
             _logger.LogDebug(1, "RamMetricsController created");
             _repository = repository;
         }
-        public RamMetricsController(IRamMetricsRepository repository)
-        {
-            _repository = repository;
-        }
         /// <summary>
         /// Возвращает по запросу размер доступной оперативной памяти
         /// </summary>

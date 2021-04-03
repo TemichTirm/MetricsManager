@@ -20,10 +20,6 @@ namespace MetricsAgent.Controllers
             _logger.LogDebug(1, "NetworkMetricsController created");
             _repository = repository;
         }
-        public NetworkMetricsController(INetworkMetricsRepository repository)
-        {
-            _repository = repository;
-        }
         /// <summary>
         /// Возвращает по запросу сетевые метрики в указанный промежуток времени
         /// </summary>

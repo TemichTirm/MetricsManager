@@ -20,10 +20,6 @@ namespace MetricsAgent.Controllers
             _logger.LogDebug(1, ".NetMetricsController created");
             _repository = repository;
         }
-        public DotNetMetricsController(IDotNetMetricsRepository repository)
-        {
-            _repository = repository;
-        }
         /// <summary>
         /// Возвращает по запросу метрики работы .Net в указанный промежуток времени
         /// </summary>

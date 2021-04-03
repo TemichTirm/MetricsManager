@@ -20,10 +20,6 @@ namespace MetricsAgent.Controllers
             _logger.LogDebug(1, "HddMetricsController created");
             _repository = repository;
         }
-        public HddMetricsController(IHddMetricsRepository repository)
-        {
-            _repository = repository;
-        }
         /// <summary>
         /// Возвращает по запросу оставшееся пространство на HDD в указанный промежуток времени
         /// </summary>

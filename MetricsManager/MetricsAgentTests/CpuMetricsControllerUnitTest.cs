@@ -14,7 +14,6 @@ namespace MetricsAgentTests
     public class CpuMetricsControllerUnitTest
     {
         private CpuMetricsController controller;
-        private readonly ILogger<CpuMetricsController> _logger;
         private Mock<ICpuMetricsRepository> mockRepository;
         private Mock<ILogger<CpuMetricsController>> mockLogger;
         private DateTimeOffset fromTime = new(new(2020, 01, 01));
