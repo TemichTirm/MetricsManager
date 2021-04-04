@@ -75,7 +75,18 @@ namespace MetricsAgent.Controllers
             }
             return Ok(response);
         }
-          
+        [HttpGet("getmetric/{id}")]
+        public IActionResult GetById([FromQuery] int id)
+        {
+            _logger.LogTrace(1, $"Query GetByID Metrics with params: ID={id}");
+            CpuMetric metric = _repository.GetById(id);
+            var response = new CpuMetricDto();
+            response.Time = baseTime.AddSeconds(metric.Time);
+            response.Value = metric.Value;
+            response.Id = metric.Id;
+            return Ok(response);
+        }
+
         /// <summary>
         /// Возвращает по запросу метрики использования CPU в указанный промежуток времени
         /// </summary>

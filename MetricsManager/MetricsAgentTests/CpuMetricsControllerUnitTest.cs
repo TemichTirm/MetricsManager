@@ -66,6 +66,15 @@ namespace MetricsAgentTests
         }
 
         [Fact]
+        public void GetByID_ShouldCall_GetByID_From_Repository()
+        {
+            int id = 1;
+            mockRepository.Setup(repository => repository.GetById(id)).Returns(new CpuMetric()).Verifiable();
+            var result = controller.GetById(id);
+            mockRepository.Verify(repository => repository.GetById(id), Times.AtLeastOnce());
+        }
+
+        [Fact]
         public void GetByTimePeriod_ShouldCall_GetByTimePeriod_From_Repository()
         {
             double startTime = (fromTime - new DateTime(2000, 01, 01)).TotalSeconds;

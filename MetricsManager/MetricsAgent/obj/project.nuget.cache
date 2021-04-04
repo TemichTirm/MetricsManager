@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "XH3lvFi1zX9r1F+7+3UQP75/ZbhQWEoB/LJDh+5utQgcg5SMIdQISxgHjymRa5POyA+KrwibiiG0ywJ4vJ1Vug==",
+  "dgSpecHash": "fgKq45M5faVZtxxzqPth+Lk2fHI/IC+aDPEr4YBRrwH/Pquiu3SwkoMarIztGoEepdehnnPG4Q68MxLuiVF0bw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Temich\\source\\repos\\Web API MicroService\\MetricsManager\\MetricsManager\\MetricsAgent\\MetricsAgent.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Temich\\.nuget\\packages\\dapper\\2.0.78\\dapper.2.0.78.nupkg.sha512",
     "C:\\Users\\Temich\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\Temich\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\Temich\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.0\\microsoft.extensions.dependencyinjection.5.0.0.nupkg.sha512",
