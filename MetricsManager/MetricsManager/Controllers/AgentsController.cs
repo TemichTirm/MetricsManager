@@ -11,12 +11,9 @@ namespace MetricsManager.Controllers
     {
         private readonly List<AgentInfo> _registeredAgents;
         private readonly ILogger<AgentsController> _logger;
-        public AgentsController(List<AgentInfo> registeredAgents)
+        public AgentsController(List<AgentInfo> registeredAgents, ILogger<AgentsController> logger)
         {
             _registeredAgents = registeredAgents;
-        }
-        public AgentsController(ILogger<AgentsController> logger)
-        {
             _logger = logger;
             _logger.LogDebug(1, "AgentController created");
         }
