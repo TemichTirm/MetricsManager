@@ -1,5 +1,7 @@
 ﻿using MetricsManager.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Moq;
 using System;
 using Xunit;
 
@@ -11,10 +13,13 @@ namespace MetricsManagerTests
         private int agentId = 1;
         private TimeSpan fromTime = TimeSpan.FromSeconds(0);
         private TimeSpan toTime = TimeSpan.FromSeconds(100);
+        private Mock<ILogger<DotNetMetricsController>> mockLogger;
+
 
         public DotNetMetricsControllerUnitTest()
         {
-            controller = new DotNetMetricsController();
+            mockLogger = new Mock<ILogger<DotNetMetricsController>>();
+            controller = new DotNetMetricsController(mockLogger.Object);
         }
 
         [Fact]

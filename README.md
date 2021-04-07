@@ -75,8 +75,53 @@ ________________________________________________________________________________
 
 
 Проект: MetricsAgentTests (Тестирование всех методов всех контроллеров в Агенте метрик)
-1) CpuMetricsControllerUnitTest - тестирование всехметодов в CpuMetricsController
-2) RamMetricsControllerUnitTest - тестирование всехметодов в RamMetricsController
-3) HddMetricsControllerUnitTest - тестирование всехметодов в HddMetricsController
-4) NetworkMetricsControllerUnitTest - тестирование всехметодов в NetworkMetricsController
-5) DotNetMetricsControllerUnitTest - тестирование всехметодов в DotNetMetricsController
+1) CpuMetricsControllerUnitTest - тестирование всех методов в CpuMetricsController
+2) RamMetricsControllerUnitTest - тестирование всех методов в RamMetricsController
+3) HddMetricsControllerUnitTest - тестирование всех методов в HddMetricsController
+4) NetworkMetricsControllerUnitTest - тестирование всех методов в NetworkMetricsController
+5) DotNetMetricsControllerUnitTest - тестирование всехм етодов в DotNetMetricsController
+
+______________________________________________________________________________________________________________________________________________
+
+Решение задания к уроку №3. Агент сбора метрик CPU, RAM, HDD, Metwork и .Net (Формирование базыданных для каждого из контроллеров, реализацияметодов CRUD для сонтроллера CPU, а также методов предоставления метрик в заданном интервале времени длявсех остальных контроллеров. Мoq тестирование всех методов для контроллеров Агента метрик)
+
+Проект: MetricsAgent (Агент метрик)
+1) Контроллер сбора метрик CPU (CpuMetricsController)
+	1.1 - Метод сохранения метрики CPU в базе данных;
+	1.2 - Метод изменения метрики CPU в базе данных;
+	1.3 - Метод удаления метрики CPU из базы данных;
+	1.4 - Метод вывода всех метрик CPU из базы данных;
+	1.5 - Метод вывода метрик CPU из базы данных в указанном диапазоне времени (fromTime, toTime).
+
+2) Контроллер сбора метрик RAM (RamMetricsController)
+	2.1 - Метод вывода метрик RAM из базы данных в указанном диапазоне времени (fromTime, toTime).
+
+3) Контроллер сбора метрик HDD (HddMetricsController)
+	3.1 - Метод вывода метрик HDD из базы данных в указанном диапазоне времени (fromTime, toTime).
+
+4) Контроллер сбора метрик Network (NetworkMetricsController)
+	4.1 - Метод вывода метрик Network из базы данных в указанном диапазоне времени (fromTime, toTime).
+
+5) Контроллер сбора метрик .Net (DotNetMetricsController)
+	5.1 - Метод вывода метрик .Net из базы данных в указанном диапазоне времени (fromTime, toTime).
+
+
+Проект: MetricsAgentTests (Тестирование Агента метрик)
+1) Тест контроллера сбора метрик CPU (CpuMetricsController)
+	1.1 - Moq тестирование метода сохранения метрики CPU в базе данных;
+	1.2 - Moq тестирование метода изменения метрики CPU в базе данных;
+	1.3 - Moq тестирование метода удаления метрики CPU из базы данных;
+	1.4 - Moq тестирование метода вывода всех метрик CPU из базы данных;
+	1.5 - Moq тестирование метода вывода метрик CPU из базы данных в указанном диапазоне времени (fromTime, toTime).
+
+2) Тест контроллера сбора метрик RAM (RamMetricsController)
+	2.1 - Moq тестирование метода вывода метрик RAM из базы данных в указанном диапазоне времени (fromTime, toTime).
+
+3) Тест контроллера сбора метрик HDD (HddMetricsController)
+	3.1 - Moq тестирование метода вывода метрик HDD из базы данных в указанном диапазоне времени (fromTime, toTime).
+
+4) Тест контроллера сбора метрик Network (NetworkMetricsController)
+	4.1 - Moq тестирование метода вывода метрик Network из базы данных в указанном диапазоне времени (fromTime, toTime).
+
+5) Тест контроллера сбора метрик .Net (DotNetMetricsController)
+	5.1 - Moq тестирование метода вывода метрик .Net из базы данных в указанном диапазоне времени (fromTime, toTime).

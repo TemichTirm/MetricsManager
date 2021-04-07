@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace MetricsManager.Controllers
@@ -7,6 +8,12 @@ namespace MetricsManager.Controllers
     [ApiController]
     public class RamMetricsController : ControllerBase
     {
+        private readonly ILogger<RamMetricsController> _logger;
+        public RamMetricsController(ILogger<RamMetricsController> logger)
+        {
+            _logger = logger;
+            _logger.LogDebug(1, "RamMetricsController created");
+        }
         /// <summary>
         /// Возвращает по запросу размер доступной оперативной памяти определенного агента
         /// </summary>
@@ -15,6 +22,7 @@ namespace MetricsManager.Controllers
         [HttpGet("available/agent/{agentId}")]
         public IActionResult GetMetricsFromAgent([FromRoute] int agentId)
         {
+            _logger.LogTrace($"Query GetRamMetrics with params: AgentID={agentId}");
             return Ok();
         }
 
@@ -25,6 +33,7 @@ namespace MetricsManager.Controllers
         [HttpGet("available/cluster")]
         public IActionResult GetMetricsFromAllCluster()
         {
+            _logger.LogTrace($"Query GetRamMetrics without params");
             return Ok();
         }
     }

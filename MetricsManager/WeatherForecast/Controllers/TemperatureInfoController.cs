@@ -44,7 +44,7 @@ namespace WeatherForecast.Controllers
         {
             if (temperature != null && date != null)
             {
-                TemperatureInfo newRecord = new TemperatureInfo() { Temperature = (int)temperature, Date = (DateTime)date };
+                TemperatureInfo newRecord = new() { Temperature = (int)temperature, Date = (DateTime)date };
                 _valueHolder.Add(newRecord);
                 return Ok();
             }
