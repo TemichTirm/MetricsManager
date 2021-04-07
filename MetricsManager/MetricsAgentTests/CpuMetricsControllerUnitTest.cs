@@ -1,3 +1,4 @@
+using AutoMapper;
 using MetricsAgent.Controllers;
 using MetricsAgent.DTO;
 using MetricsAgent.Models;
@@ -13,18 +14,20 @@ namespace MetricsAgentTests
 {
     public class CpuMetricsControllerUnitTest
     {
-        private CpuMetricsController controller;
-        private Mock<ICpuMetricsRepository> mockRepository;
-        private Mock<ILogger<CpuMetricsController>> mockLogger;
-        private DateTimeOffset fromTime = new(new(2020, 01, 01));
-        private DateTimeOffset toTime = new(new(2020, 12, 31));
-        private Percentile percentile = Percentile.P99;
+        private readonly CpuMetricsController controller;
+        private readonly Mock<ICpuMetricsRepository> mockRepository;
+        private readonly Mock<ILogger<CpuMetricsController>> mockLogger;
+        private readonly Mock<IMapper> mockMapper;
+        private readonly DateTimeOffset fromTime = new(new(2020, 01, 01));
+        private readonly DateTimeOffset toTime = new(new(2020, 12, 31));
+        private readonly Percentile percentile = Percentile.P99;
 
         public CpuMetricsControllerUnitTest()
         {
             mockRepository = new Mock<ICpuMetricsRepository>();
             mockLogger = new Mock<ILogger<CpuMetricsController>>();
-            controller = new CpuMetricsController(mockRepository.Object, mockLogger.Object);
+            mockMapper = new Mock<IMapper>();
+            controller = new CpuMetricsController(mockRepository.Object, mockLogger.Object, mockMapper.Object);
         }
 
         [Fact]
@@ -77,12 +80,11 @@ namespace MetricsAgentTests
         [Fact]
         public void GetByTimePeriod_ShouldCall_GetByTimePeriod_From_Repository()
         {
-            double startTime = (fromTime - new DateTime(2000, 01, 01)).TotalSeconds;
-            double endTime = (toTime - new DateTime(2000, 01, 01)).TotalSeconds;
-
-            mockRepository.Setup(repository => repository.GetByTimePeriod(startTime, endTime)).Returns(new List<CpuMetric>()).Verifiable();
+            mockRepository.Setup(repository => repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds()))
+                                .Returns(new List<CpuMetric>()).Verifiable();
             var result = controller.GetCpuMetrics(fromTime, toTime);
-            mockRepository.Verify(repository => repository.GetByTimePeriod(startTime, endTime), Times.AtMostOnce());
+            mockRepository.Verify(repository => repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds())
+                                    , Times.AtMostOnce());
         }
 
         [Fact]

@@ -12,8 +12,7 @@ namespace MetricsAgent.Controllers
     public class DotNetMetricsController : ControllerBase
     {
         private readonly ILogger<DotNetMetricsController> _logger;
-        private IDotNetMetricsRepository _repository;
-        private readonly DateTimeOffset baseTime = new (new(2000, 01, 01));
+        private readonly IDotNetMetricsRepository _repository;
         public DotNetMetricsController(IDotNetMetricsRepository repository, ILogger<DotNetMetricsController> logger)
         {
             _logger = logger;
@@ -30,14 +29,14 @@ namespace MetricsAgent.Controllers
         public IActionResult GetDotNetMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
             _logger.LogTrace(1, $"Query GetDotNetMetrics with params: FromTime={fromTime}, ToTime={toTime}");
-            var metrics = _repository.GetByTimePeriod((fromTime - baseTime).TotalSeconds, (toTime - baseTime).TotalSeconds);
+            var metrics = _repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds());
             var response = new SelectByTimePeriodDotNetMetricsResponse()
             {
                 Metrics = new List<DotNetMetricDto>()
             };
             foreach (var metric in metrics)
             {
-                response.Metrics.Add(new DotNetMetricDto { Time = baseTime.AddSeconds(metric.Time),
+                response.Metrics.Add(new DotNetMetricDto { Time = DateTimeOffset.FromUnixTimeSeconds(metric.Time),
                                                            Value = metric.Value, 
                                                            Id = metric.Id });
             }

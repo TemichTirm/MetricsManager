@@ -12,8 +12,7 @@ namespace MetricsAgent.Controllers
     public class HddMetricsController : ControllerBase
     {
         private readonly ILogger<HddMetricsController> _logger;
-        private IHddMetricsRepository _repository;
-        private readonly DateTimeOffset baseTime = new (new(2000, 01, 01));
+        private readonly IHddMetricsRepository _repository;
         public HddMetricsController(IHddMetricsRepository repository, ILogger<HddMetricsController> logger)
         {
             _logger = logger;
@@ -30,7 +29,7 @@ namespace MetricsAgent.Controllers
         public IActionResult GetHddMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
             _logger.LogTrace(1, $"Query GetHddMetrics with params: FromTime={fromTime}, ToTime={toTime}");
-            var metrics = _repository.GetByTimePeriod((fromTime - baseTime).TotalSeconds, (toTime - baseTime).TotalSeconds);
+            var metrics = _repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds());
             var response = new SelectByTimePeriodHddMetricsResponse()
             {
                 Metrics = new List<HddMetricDto>()
@@ -39,7 +38,7 @@ namespace MetricsAgent.Controllers
             {
                 response.Metrics.Add(new HddMetricDto
                 {
-                    Time = baseTime.AddSeconds(metric.Time),
+                    Time = DateTimeOffset.FromUnixTimeSeconds(metric.Time),
                     Value = metric.Value,
                     Id = metric.Id
                 });

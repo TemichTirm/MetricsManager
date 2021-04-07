@@ -12,8 +12,7 @@ namespace MetricsAgent.Controllers
     public class NetworkMetricsController : ControllerBase
     {
         private readonly ILogger<NetworkMetricsController> _logger;
-        private INetworkMetricsRepository _repository;
-        private readonly DateTimeOffset baseTime = new(new(2000, 01, 01));
+        private readonly INetworkMetricsRepository _repository;
         public NetworkMetricsController(INetworkMetricsRepository repository, ILogger<NetworkMetricsController> logger)
         {
             _logger = logger;
@@ -30,7 +29,7 @@ namespace MetricsAgent.Controllers
         public IActionResult GetNetworkMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
             _logger.LogTrace(1, $"Query GetNetworkMetrics with params: FromTime={fromTime}, ToTime={toTime}");
-            var metrics = _repository.GetByTimePeriod((fromTime - baseTime).TotalSeconds, (toTime - baseTime).TotalSeconds);
+            var metrics = _repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds());
             var response = new SelectByTimePeriodNetworkMetricsResponse()
             {
                 Metrics = new List<NetworkMetricDto>()
@@ -39,7 +38,7 @@ namespace MetricsAgent.Controllers
             {
                 response.Metrics.Add(new NetworkMetricDto
                 {
-                    Time = baseTime.AddSeconds(metric.Time),
+                    Time = DateTimeOffset.FromUnixTimeSeconds(metric.Time),
                     Value = metric.Value,
                     Id = metric.Id
                 });

@@ -12,8 +12,7 @@ namespace MetricsAgent.Controllers
     public class RamMetricsController : ControllerBase
     {
         private readonly ILogger<RamMetricsController> _logger;
-        private IRamMetricsRepository _repository;
-        private readonly DateTimeOffset baseTime = new(new(2000, 01, 01));
+        private readonly IRamMetricsRepository _repository;
         public RamMetricsController(IRamMetricsRepository repository, ILogger<RamMetricsController> logger)
         {
             _logger = logger;
@@ -28,7 +27,7 @@ namespace MetricsAgent.Controllers
         public IActionResult GetRamMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
             _logger.LogTrace(1, $"Query GetRamMetrics with params: FromTime={fromTime}, ToTime={toTime}");
-            var metrics = _repository.GetByTimePeriod((fromTime - baseTime).TotalSeconds, (toTime - baseTime).TotalSeconds);
+            var metrics = _repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds());
             var response = new SelectByTimePeriodRamMetricsResponse()
             {
                 Metrics = new List<RamMetricDto>()
@@ -37,7 +36,7 @@ namespace MetricsAgent.Controllers
             {
                 response.Metrics.Add(new RamMetricDto
                 {
-                    Time = baseTime.AddSeconds(metric.Time),
+                    Time = DateTimeOffset.FromUnixTimeSeconds(metric.Time),
                     Value = metric.Value,
                     Id = metric.Id
                 });

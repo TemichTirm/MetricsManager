@@ -1,3 +1,4 @@
+using AutoMapper;
 using MetricsAgent.DTO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,12 +35,15 @@ namespace MetricsAgent
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MetricsAgent", Version = "v1" });
             });
+            var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
+            var mapper = mapperConfiguration.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         private void ConfigureSqlLiteConnection(IServiceCollection services)
         {
-            string connectionString = "Data Source=:memory:";
+            string connectionString = @"Data Source = metrics.db; Version = 3; Pooling = True; Max Pool Size = 100; ";
             var connection = new SQLiteConnection(connectionString);
             connection.Open();
             PrepareSchema(connection);
@@ -57,7 +61,7 @@ namespace MetricsAgent
                 // отправляем запрос в базу данных
                 command.ExecuteNonQuery();
                 command.CommandText = @"CREATE TABLE cpumetrics(id INTEGER PRIMARY KEY,
-                    value INT, time REAL)";
+                    value INT, time INT)";
                 command.ExecuteNonQuery();
             }
 
@@ -67,7 +71,7 @@ namespace MetricsAgent
                 command.CommandText = "DROP TABLE IF EXISTS dotnetmetrics";
                 command.ExecuteNonQuery();
                 command.CommandText = @"CREATE TABLE dotnetmetrics(id INTEGER PRIMARY KEY,
-                    value INT, time REAL)";
+                    value INT, time INT)";
                 command.ExecuteNonQuery();
             }
             // Создаем таблицу с метриками HDD
@@ -76,7 +80,7 @@ namespace MetricsAgent
                 command.CommandText = "DROP TABLE IF EXISTS hddmetrics";
                 command.ExecuteNonQuery();
                 command.CommandText = @"CREATE TABLE hddmetrics(id INTEGER PRIMARY KEY,
-                    value INT, time REAL)";
+                    value INT, time INT)";
                 command.ExecuteNonQuery();
             }
             // Создаем таблицу с метриками Network
@@ -85,7 +89,7 @@ namespace MetricsAgent
                 command.CommandText = "DROP TABLE IF EXISTS networkmetrics";
                 command.ExecuteNonQuery();
                 command.CommandText = @"CREATE TABLE networkmetrics(id INTEGER PRIMARY KEY,
-                    value INT, time REAL)";
+                    value INT, time INT)";
                 command.ExecuteNonQuery();
             }
             // Создаем таблицу с метриками RAM
@@ -94,7 +98,7 @@ namespace MetricsAgent
                 command.CommandText = "DROP TABLE IF EXISTS rammetrics";
                 command.ExecuteNonQuery();
                 command.CommandText = @"CREATE TABLE rammetrics(id INTEGER PRIMARY KEY,
-                    value INT, time REAL)";
+                    value INT, time INT)";
                 command.ExecuteNonQuery();
             }
             // Заполняем БД фейковыми данными для отработки дальнейших запросов
@@ -103,7 +107,7 @@ namespace MetricsAgent
                 using var cmd = new SQLiteCommand(connection);
                 {
                     // Для таблицы cpumetrics
-                    double time = (new DateTime(2020, 05, i + 10) - new DateTime(2000, 01, 01)).TotalSeconds;
+                    long time = new DateTimeOffset(new DateTime(2020, 05, (i+10)), TimeSpan.FromHours(0)).ToUnixTimeSeconds();
                     int value = i * 10;
                     cmd.CommandText = "INSERT INTO cpumetrics(value, time) VALUES(@value, @time)";
                     cmd.Parameters.AddWithValue("@value", value);
@@ -112,7 +116,7 @@ namespace MetricsAgent
                     cmd.ExecuteNonQuery();
 
                     // Для таблицы dotnetmetrics
-                    time = (new DateTime(2020, 06, i + 2) - new DateTime(2000, 01, 01)).TotalSeconds;
+                    time = new DateTimeOffset(new(2020, 06, i + 2)).ToUnixTimeSeconds();
                     value = i * 2;
                     cmd.CommandText = "INSERT INTO dotnetmetrics(value, time) VALUES(@value, @time)";
                     cmd.Parameters.AddWithValue("@value", value);
@@ -121,7 +125,7 @@ namespace MetricsAgent
                     cmd.ExecuteNonQuery();
 
                     // Для таблицы hddmetrics
-                    time = (new DateTime(2020, 07, i + 5) - new DateTime(2000, 01, 01)).TotalSeconds;
+                    time = new DateTimeOffset(new(2020, 07, i + 5)).ToUnixTimeSeconds();
                     value = i * 5;
                     cmd.CommandText = "INSERT INTO hddmetrics(value, time) VALUES(@value, @time)";
                     cmd.Parameters.AddWithValue("@value", value);
@@ -130,7 +134,7 @@ namespace MetricsAgent
                     cmd.ExecuteNonQuery();
 
                     // Для таблицы networkmetrics
-                    time = (new DateTime(2020, 08, i * 2) - new DateTime(2000, 01, 01)).TotalSeconds;
+                    time = new DateTimeOffset(new(2020, 08, i * 2)).ToUnixTimeSeconds();
                     value = i + 5 * i;
                     cmd.CommandText = "INSERT INTO networkmetrics(value, time) VALUES(@value, @time)";
                     cmd.Parameters.AddWithValue("@value", value);
@@ -139,7 +143,7 @@ namespace MetricsAgent
                     cmd.ExecuteNonQuery();
 
                     // Для таблицы rammetrics
-                    time = (new DateTime(2020, 09, i * 3) - new DateTime(2000, 01, 01)).TotalSeconds;
+                    time = new DateTimeOffset(new(2020, 09, i * 3)).ToUnixTimeSeconds();
                     value = i + 3 * i;
                     cmd.CommandText = "INSERT INTO rammetrics(value, time) VALUES(@value, @time)";
                     cmd.Parameters.AddWithValue("@value", value);
