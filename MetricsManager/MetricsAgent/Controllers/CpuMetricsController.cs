@@ -19,7 +19,8 @@ namespace MetricsAgent.Controllers
         private readonly ICpuMetricsRepository _repository;
         private readonly IMapper _mapper;
 
-        public CpuMetricsController(ICpuMetricsRepository repository, ILogger<CpuMetricsController> logger, IMapper mapper)
+        public CpuMetricsController(ICpuMetricsRepository repository, ILogger<CpuMetricsController> logger, 
+                                    IMapper mapper)
         {
             _logger = logger;
             _logger.LogDebug(1, "CpuMetricsController created");
@@ -32,11 +33,7 @@ namespace MetricsAgent.Controllers
         public IActionResult Create([FromBody] CpuMetricCreateRequest request)
         {
             _logger.LogTrace(1, $"Query Create Metric with params: Value={request.Value}, Time={request.Time}");
-            _repository.Create(new CpuMetric 
-            {
-                Time = request.Time.ToUnixTimeSeconds(),
-                Value = request.Value
-            });
+            _repository.Create(_mapper.Map<CpuMetric>(request));
             return Ok();
         }
         [HttpPut("update")]

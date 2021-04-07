@@ -1,4 +1,5 @@
-﻿using MetricsAgent.DTO;
+﻿using AutoMapper;
+using MetricsAgent.DTO;
 using MetricsAgent.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,11 +14,15 @@ namespace MetricsAgent.Controllers
     {
         private readonly ILogger<RamMetricsController> _logger;
         private readonly IRamMetricsRepository _repository;
-        public RamMetricsController(IRamMetricsRepository repository, ILogger<RamMetricsController> logger)
+        private readonly IMapper _mapper;
+
+        public RamMetricsController(IRamMetricsRepository repository, ILogger<RamMetricsController> logger,
+                                    IMapper mapper)
         {
             _logger = logger;
             _logger.LogDebug(1, "RamMetricsController created");
             _repository = repository;
+            _mapper = mapper;
         }
         /// <summary>
         /// Возвращает по запросу размер доступной оперативной памяти
@@ -34,12 +39,7 @@ namespace MetricsAgent.Controllers
             };
             foreach (var metric in metrics)
             {
-                response.Metrics.Add(new RamMetricDto
-                {
-                    Time = DateTimeOffset.FromUnixTimeSeconds(metric.Time),
-                    Value = metric.Value,
-                    Id = metric.Id
-                });
+                response.Metrics.Add(_mapper.Map<RamMetricDto>(metric));
             }
             return Ok(response);
         }

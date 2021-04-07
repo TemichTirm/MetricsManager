@@ -1,4 +1,5 @@
-﻿using MetricsAgent.DTO;
+﻿using AutoMapper;
+using MetricsAgent.DTO;
 using MetricsAgent.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,11 +14,15 @@ namespace MetricsAgent.Controllers
     {
         private readonly ILogger<HddMetricsController> _logger;
         private readonly IHddMetricsRepository _repository;
-        public HddMetricsController(IHddMetricsRepository repository, ILogger<HddMetricsController> logger)
+        private readonly IMapper _mapper;
+
+        public HddMetricsController(IHddMetricsRepository repository, ILogger<HddMetricsController> logger,
+                                    IMapper mapper)
         {
             _logger = logger;
             _logger.LogDebug(1, "HddMetricsController created");
             _repository = repository;
+            _mapper = mapper;
         }
         /// <summary>
         /// Возвращает по запросу оставшееся пространство на HDD в указанный промежуток времени
@@ -36,12 +41,7 @@ namespace MetricsAgent.Controllers
             };
             foreach (var metric in metrics)
             {
-                response.Metrics.Add(new HddMetricDto
-                {
-                    Time = DateTimeOffset.FromUnixTimeSeconds(metric.Time),
-                    Value = metric.Value,
-                    Id = metric.Id
-                });
+                response.Metrics.Add(_mapper.Map<HddMetricDto>(metric));
             }
             return Ok(response);
         }

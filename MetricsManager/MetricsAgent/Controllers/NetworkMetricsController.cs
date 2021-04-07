@@ -1,4 +1,5 @@
-﻿using MetricsAgent.DTO;
+﻿using AutoMapper;
+using MetricsAgent.DTO;
 using MetricsAgent.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,11 +14,15 @@ namespace MetricsAgent.Controllers
     {
         private readonly ILogger<NetworkMetricsController> _logger;
         private readonly INetworkMetricsRepository _repository;
-        public NetworkMetricsController(INetworkMetricsRepository repository, ILogger<NetworkMetricsController> logger)
+        private readonly IMapper _mapper;
+
+        public NetworkMetricsController(INetworkMetricsRepository repository, ILogger<NetworkMetricsController> logger,
+                                        IMapper mapper)
         {
             _logger = logger;
             _logger.LogDebug(1, "NetworkMetricsController created");
             _repository = repository;
+            _mapper = mapper;
         }
         /// <summary>
         /// Возвращает по запросу сетевые метрики в указанный промежуток времени
@@ -36,12 +41,7 @@ namespace MetricsAgent.Controllers
             };
             foreach (var metric in metrics)
             {
-                response.Metrics.Add(new NetworkMetricDto
-                {
-                    Time = DateTimeOffset.FromUnixTimeSeconds(metric.Time),
-                    Value = metric.Value,
-                    Id = metric.Id
-                });
+                response.Metrics.Add(_mapper.Map<NetworkMetricDto>(metric));
             }
             return Ok(response);
         }

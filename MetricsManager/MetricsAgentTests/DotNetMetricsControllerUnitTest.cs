@@ -1,7 +1,7 @@
+using AutoMapper;
 using MetricsAgent.Controllers;
 using MetricsAgent.DTO;
 using MetricsAgent.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
@@ -12,28 +12,31 @@ namespace MetricsAgentTests
 {
     public class DotNetMetricsControllerUnitTest
     {
-        private DotNetMetricsController controller;
-        private Mock<IDotNetMetricsRepository> mockRepository;
-        private Mock<ILogger<DotNetMetricsController>> mockLogger;
-        private DateTimeOffset fromTime = new(new(2020, 01, 01));
-        private DateTimeOffset toTime = new(new(2020, 12, 31));
+        private readonly DotNetMetricsController _controller;
+        private readonly Mock<IDotNetMetricsRepository> _mockRepository;
+        private readonly Mock<ILogger<DotNetMetricsController>> _mockLogger;
+        private readonly Mock<IMapper> _mockMapper;
+        private readonly DateTimeOffset fromTime = new(new(2020, 01, 01));
+        private readonly DateTimeOffset toTime = new(new(2020, 12, 31));
 
         public DotNetMetricsControllerUnitTest()
         {
-            mockRepository = new Mock<IDotNetMetricsRepository>();
-            mockLogger = new Mock<ILogger<DotNetMetricsController>>();
-            controller = new DotNetMetricsController(mockRepository.Object, mockLogger.Object);
+            _mockRepository = new Mock<IDotNetMetricsRepository>();
+            _mockLogger = new Mock<ILogger<DotNetMetricsController>>();
+            _mockMapper = new Mock<IMapper>();
+            _controller = new DotNetMetricsController(_mockRepository.Object, _mockLogger.Object, _mockMapper.Object);
         }
 
         [Fact]
         public void GetByTimePeriod_ShouldCall_GetByTimePeriod_From_Repository()
         {
-            double startTime = (fromTime - new DateTime(2000, 01, 01)).TotalSeconds;
-            double endTime = (toTime - new DateTime(2000, 01, 01)).TotalSeconds;
-
-            mockRepository.Setup(repository => repository.GetByTimePeriod(startTime, endTime)).Returns(new List<DotNetMetric>()).Verifiable();
-            var result = controller.GetDotNetMetrics(fromTime, toTime);
-            mockRepository.Verify(repository => repository.GetByTimePeriod(startTime, endTime), Times.AtMostOnce());
+            _mockRepository.Setup(repository => 
+                                  repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds()))
+                                  .Returns(new List<DotNetMetric>()).Verifiable();
+            var result = _controller.GetDotNetMetrics(fromTime, toTime);
+            _mockRepository.Verify(repository =>
+                                   repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds()), 
+                                   Times.AtMostOnce());
         }
     }
 }

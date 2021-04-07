@@ -1,4 +1,5 @@
 using AutoMapper;
+using Dapper;
 using MetricsAgent.DTO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -52,104 +53,65 @@ namespace MetricsAgent
 
         private void PrepareSchema(SQLiteConnection connection)
         {
-            // Создаем таблицус метриками CPU
-            using (var command = new SQLiteCommand(connection))
+            // Создаем таблицы в базе данных
+            using (var createTableConnection = new SQLiteConnection(connection))
             {
-                // задаем новый текст команды для выполнения
-                // удаляем таблицу с метриками если она существует в базе данных
-                command.CommandText = "DROP TABLE IF EXISTS cpumetrics";
-                // отправляем запрос в базу данных
-                command.ExecuteNonQuery();
-                command.CommandText = @"CREATE TABLE cpumetrics(id INTEGER PRIMARY KEY,
-                    value INT, time INT)";
-                command.ExecuteNonQuery();
+                // Создаем таблицус метриками CPU
+                createTableConnection.Execute("DROP TABLE IF EXISTS cpumetrics");
+                createTableConnection.Execute("CREATE TABLE cpumetrics(id INTEGER PRIMARY KEY, value INT, time INT)");
+
+                // Создаем таблицу с метриками .Net
+                createTableConnection.Execute("DROP TABLE IF EXISTS dotnetmetrics");
+                createTableConnection.Execute("CREATE TABLE dotnetmetrics(id INTEGER PRIMARY KEY, value INT, time INT)");
+
+                // Создаем таблицу с метриками HDD
+                createTableConnection.Execute("DROP TABLE IF EXISTS hddmetrics");
+                createTableConnection.Execute("CREATE TABLE hddmetrics(id INTEGER PRIMARY KEY, value INT, time INT)");
+
+                // Создаем таблицу с метриками Network
+                createTableConnection.Execute("DROP TABLE IF EXISTS networkmetrics");
+                createTableConnection.Execute("CREATE TABLE networkmetrics(id INTEGER PRIMARY KEY, value INT, time INT)");
+
+                // Создаем таблицу с метриками RAM
+                createTableConnection.Execute("DROP TABLE IF EXISTS rammetrics");
+                createTableConnection.Execute("CREATE TABLE rammetrics(id INTEGER PRIMARY KEY, value INT, time INT)");
             }
 
-            // Создаем таблицу с метриками .Net
-            using (var command = new SQLiteCommand(connection))
+            using (var fillTablesConnection = new SQLiteConnection(connection))
             {
-                command.CommandText = "DROP TABLE IF EXISTS dotnetmetrics";
-                command.ExecuteNonQuery();
-                command.CommandText = @"CREATE TABLE dotnetmetrics(id INTEGER PRIMARY KEY,
-                    value INT, time INT)";
-                command.ExecuteNonQuery();
-            }
-            // Создаем таблицу с метриками HDD
-            using (var command = new SQLiteCommand(connection))
-            {
-                command.CommandText = "DROP TABLE IF EXISTS hddmetrics";
-                command.ExecuteNonQuery();
-                command.CommandText = @"CREATE TABLE hddmetrics(id INTEGER PRIMARY KEY,
-                    value INT, time INT)";
-                command.ExecuteNonQuery();
-            }
-            // Создаем таблицу с метриками Network
-            using (var command = new SQLiteCommand(connection))
-            {
-                command.CommandText = "DROP TABLE IF EXISTS networkmetrics";
-                command.ExecuteNonQuery();
-                command.CommandText = @"CREATE TABLE networkmetrics(id INTEGER PRIMARY KEY,
-                    value INT, time INT)";
-                command.ExecuteNonQuery();
-            }
-            // Создаем таблицу с метриками RAM
-            using (var command = new SQLiteCommand(connection))
-            {
-                command.CommandText = "DROP TABLE IF EXISTS rammetrics";
-                command.ExecuteNonQuery();
-                command.CommandText = @"CREATE TABLE rammetrics(id INTEGER PRIMARY KEY,
-                    value INT, time INT)";
-                command.ExecuteNonQuery();
-            }
-            // Заполняем БД фейковыми данными для отработки дальнейших запросов
-            for (int i = 1; i <= 10; i++)
-            {
-                using var cmd = new SQLiteCommand(connection);
+                // Заполняем БД фейковыми данными для отработки дальнейших запросов
+                for (int i = 1; i <= 10; i++)
                 {
+
                     // Для таблицы cpumetrics
-                    long time = new DateTimeOffset(new DateTime(2020, 05, (i+10)), TimeSpan.FromHours(0)).ToUnixTimeSeconds();
-                    int value = i * 10;
-                    cmd.CommandText = "INSERT INTO cpumetrics(value, time) VALUES(@value, @time)";
-                    cmd.Parameters.AddWithValue("@value", value);
-                    cmd.Parameters.AddWithValue("@time", time);
-                    cmd.Prepare();
-                    cmd.ExecuteNonQuery();
+                    long newTime = new DateTimeOffset(new DateTime(2020, 05, i + 10), TimeSpan.FromHours(0)).ToUnixTimeSeconds();
+                    int newValue = i * 10;
+                    fillTablesConnection.Execute("INSERT INTO cpumetrics(value, time) VALUES(@value, @time)"
+                                                , new { value = newValue, time = newTime });
 
                     // Для таблицы dotnetmetrics
-                    time = new DateTimeOffset(new(2020, 06, i + 2)).ToUnixTimeSeconds();
-                    value = i * 2;
-                    cmd.CommandText = "INSERT INTO dotnetmetrics(value, time) VALUES(@value, @time)";
-                    cmd.Parameters.AddWithValue("@value", value);
-                    cmd.Parameters.AddWithValue("@time", time);
-                    cmd.Prepare();
-                    cmd.ExecuteNonQuery();
+                    newTime = new DateTimeOffset(new DateTime(2020, 06, i + 2), TimeSpan.FromHours(0)).ToUnixTimeSeconds();
+                    newValue = i * 2;
+                    fillTablesConnection.Execute("INSERT INTO dotnetmetrics(value, time) VALUES(@value, @time)"
+                                                , new { value = newValue, time = newTime });
 
                     // Для таблицы hddmetrics
-                    time = new DateTimeOffset(new(2020, 07, i + 5)).ToUnixTimeSeconds();
-                    value = i * 5;
-                    cmd.CommandText = "INSERT INTO hddmetrics(value, time) VALUES(@value, @time)";
-                    cmd.Parameters.AddWithValue("@value", value);
-                    cmd.Parameters.AddWithValue("@time", time);
-                    cmd.Prepare();
-                    cmd.ExecuteNonQuery();
+                    newTime = new DateTimeOffset(new DateTime(2020, 07, i + 5), TimeSpan.FromHours(0)).ToUnixTimeSeconds();
+                    newValue = i * 5;
+                    fillTablesConnection.Execute("INSERT INTO hddmetrics(value, time) VALUES(@value, @time)"
+                                                , new { value = newValue, time = newTime });
 
                     // Для таблицы networkmetrics
-                    time = new DateTimeOffset(new(2020, 08, i * 2)).ToUnixTimeSeconds();
-                    value = i + 5 * i;
-                    cmd.CommandText = "INSERT INTO networkmetrics(value, time) VALUES(@value, @time)";
-                    cmd.Parameters.AddWithValue("@value", value);
-                    cmd.Parameters.AddWithValue("@time", time);
-                    cmd.Prepare();
-                    cmd.ExecuteNonQuery();
+                    newTime = new DateTimeOffset(new DateTime(2020, 08, i * 2), TimeSpan.FromHours(0)).ToUnixTimeSeconds();
+                    newValue = i + 5 * i;
+                    fillTablesConnection.Execute("INSERT INTO networkmetrics(value, time) VALUES(@value, @time)"
+                                                , new { value = newValue, time = newTime });
 
                     // Для таблицы rammetrics
-                    time = new DateTimeOffset(new(2020, 09, i * 3)).ToUnixTimeSeconds();
-                    value = i + 3 * i;
-                    cmd.CommandText = "INSERT INTO rammetrics(value, time) VALUES(@value, @time)";
-                    cmd.Parameters.AddWithValue("@value", value);
-                    cmd.Parameters.AddWithValue("@time", time);
-                    cmd.Prepare();
-                    cmd.ExecuteNonQuery();
+                    newTime = new DateTimeOffset(new DateTime(2020, 09, i * 3), TimeSpan.FromHours(0)).ToUnixTimeSeconds();
+                    newValue = i + 3 * i;
+                    fillTablesConnection.Execute("INSERT INTO rammetrics(value, time) VALUES(@value, @time)"
+                                                , new { value = newValue, time = newTime });
                 }
             }
         }

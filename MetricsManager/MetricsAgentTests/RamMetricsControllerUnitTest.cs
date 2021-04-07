@@ -1,7 +1,7 @@
+using AutoMapper;
 using MetricsAgent.Controllers;
 using MetricsAgent.DTO;
 using MetricsAgent.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
@@ -12,28 +12,32 @@ namespace MetricsAgentTests
 {
     public class RamMetricsControllerUnitTest
     {
-        private RamMetricsController controller;
-        private Mock<IRamMetricsRepository> mockRepository;
-        private Mock<ILogger<RamMetricsController>> mockLogger;
-        private DateTimeOffset fromTime = new(new(2020, 01, 01));
-        private DateTimeOffset toTime = new(new(2020, 12, 31));
+        private readonly RamMetricsController _controller;
+        private readonly Mock<IRamMetricsRepository> _mockRepository;
+        private readonly Mock<ILogger<RamMetricsController>> _mockLogger;
+        private readonly Mock<IMapper> _mockMapper;
+        private readonly DateTimeOffset fromTime = new(new(2020, 01, 01));
+        private readonly DateTimeOffset toTime = new(new(2020, 12, 31));
 
         public RamMetricsControllerUnitTest()
         {
-            mockRepository = new Mock<IRamMetricsRepository>();
-            mockLogger = new Mock<ILogger<RamMetricsController>>();
-            controller = new RamMetricsController(mockRepository.Object, mockLogger.Object);
+            _mockRepository = new Mock<IRamMetricsRepository>();
+            _mockLogger = new Mock<ILogger<RamMetricsController>>();
+            _mockMapper = new Mock<IMapper>();
+            _controller = new RamMetricsController(_mockRepository.Object, _mockLogger.Object, _mockMapper.Object);
         }
 
         [Fact]
         public void GetByTimePeriod_ShouldCall_GetByTimePeriod_From_Repository()
         {
-            double startTime = (fromTime - new DateTime(2000, 01, 01)).TotalSeconds;
-            double endTime = (toTime - new DateTime(2000, 01, 01)).TotalSeconds;
 
-            mockRepository.Setup(repository => repository.GetByTimePeriod(startTime, endTime)).Returns(new List<RamMetric>()).Verifiable();
-            var result = controller.GetRamMetrics(fromTime, toTime);
-            mockRepository.Verify(repository => repository.GetByTimePeriod(startTime, endTime), Times.AtMostOnce());
+            _mockRepository.Setup(repository => 
+                                  repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds())).
+                                  Returns(new List<RamMetric>()).Verifiable();
+            var result = _controller.GetRamMetrics(fromTime, toTime);
+            _mockRepository.Verify(repository => 
+                                   repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds()), 
+                                   Times.AtMostOnce());
         }
     }
 }

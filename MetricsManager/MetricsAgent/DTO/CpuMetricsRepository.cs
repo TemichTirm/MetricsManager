@@ -24,7 +24,6 @@ namespace MetricsAgent.DTO
         public CpuMetricsRepository(SQLiteConnection connection)
         {
             _connection = connection;
-            //SqlMapper.AddTypeHandler(new DateTimeOffsetHandler());
         }
 
         public void Create(CpuMetric item)
@@ -32,7 +31,7 @@ namespace MetricsAgent.DTO
             using (var connection = new SQLiteConnection(_connection))
             {
                 // запрос на вставку данных с плейсхолдерами для параметров
-                _connection.Execute("INSERT INTO cpumetrics(value, time) VALUES(@value, @time)",
+                connection.Execute("INSERT INTO cpumetrics(value, time) VALUES(@value, @time)",
                 // анонимный объект с параметрами запроса
                 new
                 {
