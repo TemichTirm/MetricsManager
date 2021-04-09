@@ -62,6 +62,22 @@
               "target": "Package",
               "version": "[2.0.78, )"
             },
+            "FluentMigrator": {
+              "target": "Package",
+              "version": "[3.2.15, )"
+            },
+            "FluentMigrator.Runner": {
+              "target": "Package",
+              "version": "[3.2.15, )"
+            },
+            "FluentMigrator.Runner.SQLite": {
+              "target": "Package",
+              "version": "[3.2.15, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
             "NLog": {
               "target": "Package",
               "version": "[4.7.9, )"
@@ -69,6 +85,10 @@
             "NLog.Web.AspNetCore": {
               "target": "Package",
               "version": "[4.11.0, )"
+            },
+            "Quartz": {
+              "target": "Package",
+              "version": "[3.3.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -142,6 +162,16 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Quartz": {
+              "target": "Package",
+              "version": "[3.3.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
