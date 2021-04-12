@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using MetricsAgent.Models;
+using MetricsCommon;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -97,5 +98,6 @@ namespace MetricsAgent.DTO
                     new { fromTime = getFromTime, toTime = getToTime }).ToList();
             }
         }
+        //public IList<CpuMetric> GetByTimePeriodPercentile(long getFromTime, long getToTime, Percentile)
     }
 }

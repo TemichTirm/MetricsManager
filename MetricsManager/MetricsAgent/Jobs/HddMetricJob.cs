@@ -11,17 +11,19 @@ namespace MetricsAgent.Jobs
     {
         // Инжектируем DI провайдер
         private readonly IServiceProvider _provider;
-        private IHddMetricsRepository _repository;
-        private int count = 0;
+        private readonly IHddMetricsRepository _repository;
+        private readonly PerformanceCounter _hddCounter;
         public HddMetricJob(IServiceProvider provider)
         {
             _provider = provider;
             _repository = _provider.GetService<IHddMetricsRepository>();
+            _hddCounter = new PerformanceCounter("PhysicalDisk", "% Disk Time", "_Total");
         }
         public Task Execute(IJobExecutionContext context)
         {
-            count++;
-            _repository.Create(new Models.HddMetric { Time = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds(), Value = count*2 });
+            var hddUsage = Convert.ToInt32(_hddCounter.NextValue());
+            var time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            _repository.Create(new Models.HddMetric { Time = time, Value = hddUsage });
             return Task.CompletedTask;
         }
     }

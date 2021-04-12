@@ -1,50 +1,34 @@
 ﻿using FluentMigrator;
+using MetricsCommon.SQL_Settings;
+using System;
 
 namespace MetricsAgent.DTO.Migrations
-{
-    
+{    
     [Migration(1)]
     public class FirstMigration : Migration
     {
+        private readonly ISQLSettings _settingsSQL;
+        public FirstMigration(ISQLSettings settingsSQL)
+        {
+            _settingsSQL = settingsSQL;
+        }
         public override void Up()
         {
-            // CPU metrics            
-            Create.Table("cpumetrics")
-            .WithColumn("Id").AsInt64().PrimaryKey().Identity()
-            .WithColumn("Value").AsInt32()
-            .WithColumn("Time").AsInt64();
+            foreach (var table in Enum.GetValues(typeof(Tables)))
+            {
+                Create.Table(_settingsSQL[(Tables)table])
+                      .WithColumn(_settingsSQL[AgentFields.Id]).AsInt64().PrimaryKey().Identity()
+                      .WithColumn(_settingsSQL[AgentFields.Value]).AsInt32()
+                      .WithColumn(_settingsSQL[AgentFields.Time]).AsInt64();
 
-            // .Net metrics
-            Create.Table("dotnetmetrics")
-            .WithColumn("Id").AsInt64().PrimaryKey().Identity()
-            .WithColumn("Value").AsInt32()
-            .WithColumn("Time").AsInt64();
-
-            // HDD metrics
-            Create.Table("hddmetrics")
-            .WithColumn("Id").AsInt64().PrimaryKey().Identity()
-            .WithColumn("Value").AsInt32()
-            .WithColumn("Time").AsInt64();
-
-            // Networt metrics
-            Create.Table("networkmetrics")
-            .WithColumn("Id").AsInt64().PrimaryKey().Identity()
-            .WithColumn("Value").AsInt32()
-            .WithColumn("Time").AsInt64();
-
-            // RAM metrics
-            Create.Table("rammetrics")
-            .WithColumn("Id").AsInt64().PrimaryKey().Identity()
-            .WithColumn("Value").AsInt32()
-            .WithColumn("Time").AsInt64();
+            }
         }
         public override void Down()
         {
-            Delete.Table("cpumetrics");
-            Delete.Table("dotnetmetrics");
-            Delete.Table("hddmetrics");
-            Delete.Table("networkmetrics");
-            Delete.Table("rammetrics");
+            foreach (var table in Enum.GetValues(typeof(Tables)))
+            {
+                Delete.Table(_settingsSQL[(Tables)table]);
+            }
         }
     }
 }

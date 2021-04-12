@@ -11,17 +11,20 @@ namespace MetricsAgent.Jobs
     {
         // Инжектируем DI провайдер
         private readonly IServiceProvider _provider;
-        private IRamMetricsRepository _repository;
-        private int count = 0;
+        private readonly IRamMetricsRepository _repository;
+        private readonly PerformanceCounter _ramCounter;
         public RamMetricJob(IServiceProvider provider)
         {
             _provider = provider;
             _repository = _provider.GetService<IRamMetricsRepository>();
+            _ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+
         }
         public Task Execute(IJobExecutionContext context)
         {
-            count++;
-            _repository.Create(new Models.RamMetric { Time = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds(), Value = count*2 });
+            var availableMemory = Convert.ToInt32(_ramCounter.NextValue());
+            var time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            _repository.Create(new Models.RamMetric { Time = time, Value = availableMemory });
             return Task.CompletedTask;
         }
     }

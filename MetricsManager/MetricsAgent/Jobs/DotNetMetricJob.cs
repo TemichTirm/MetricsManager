@@ -11,17 +11,20 @@ namespace MetricsAgent.Jobs
     {
         // Инжектируем DI провайдер
         private readonly IServiceProvider _provider;
-        private IDotNetMetricsRepository _repository;
-        private int count = 0;
+        private readonly IDotNetMetricsRepository _repository;
+        private readonly PerformanceCounter _dotNetCounter;
+
         public DotNetMetricJob(IServiceProvider provider)
         {
             _provider = provider;
             _repository = _provider.GetService<IDotNetMetricsRepository>();
+            _dotNetCounter = new PerformanceCounter(".NET CLR Memory", "# Bytes in all heaps", "_Global_"); 
         }
         public Task Execute(IJobExecutionContext context)
         {
-            count++;
-            _repository.Create(new Models.DotNetMetric { Time = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds(), Value = count*2 });
+            var allHeapSizeInKBytes = Convert.ToInt32(_dotNetCounter.NextValue()/1024);
+            var time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            _repository.Create(new Models.DotNetMetric { Time = time, Value = allHeapSizeInKBytes });
             return Task.CompletedTask;
         }
     }
