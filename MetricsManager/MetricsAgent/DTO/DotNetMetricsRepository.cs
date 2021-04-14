@@ -1,20 +1,17 @@
 ﻿using Dapper;
 using MetricsAgent.Models;
-using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 
 namespace MetricsAgent.DTO
 {
-
     // маркировочный интерфейс
     // необходим, чтобы проверить работу репозитория на тесте-заглушке
     public interface IDotNetMetricsRepository : IRepository<DotNetMetric>
     {
 
     }
-
     public class DotNetMetricsRepository : IDotNetMetricsRepository
     {
         // наше соединение с базой данных
@@ -25,7 +22,11 @@ namespace MetricsAgent.DTO
         {
             _connection = connection;
         }
-
+        /// <summary>
+        /// Добавление в базу данных новой метрики .Net 
+        /// (счетчик текущего объема памяти, выделенной в килобайтах для куч сборки мусора) 
+        /// </summary>
+        /// <param name="item">Объект класса DotNetMetric</param>
         public void Create(DotNetMetric item)
         {
             using (var connection = new SQLiteConnection(_connection))
@@ -34,24 +35,6 @@ namespace MetricsAgent.DTO
                 new { value = item.Value, time = item.Time });
             }
         }
-
-        public void Delete(int metricId)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            {
-                connection.Execute("DELETE FROM dotnetmetrics WHERE id=@id", new { id = metricId });
-            }
-        }
-
-        public void Update(DotNetMetric item)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            {
-                connection.Execute("UPDATE dotnetmetrics SET value = @value, time = @time WHERE id=@id;",
-                new { value = item.Value, time = item.Time, id = item.Id });
-            }
-        }
-
         public IList<DotNetMetric> GetAll()
         {
             using (var connection = new SQLiteConnection(_connection))
@@ -59,16 +42,6 @@ namespace MetricsAgent.DTO
                 return connection.Query<DotNetMetric>("SELECT Id, Time, Value FROM dotnetmetrics").ToList();
             }            
         }
-
-        public DotNetMetric GetById(int metricId)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            {
-                return connection.QuerySingle<DotNetMetric>("SELECT Id, Time, Value FROM dotnetmetrics WHERE id = @id",
-                new { id = metricId });
-            }            
-        }
-
         public IList<DotNetMetric> GetByTimePeriod(long getFromTime, long getToTime)
         {
             using (var connection = new SQLiteConnection(_connection))

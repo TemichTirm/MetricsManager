@@ -15,10 +15,6 @@ namespace MetricsAgent
                                               o => o.MapFrom(t => t.Time.ToUnixTimeSeconds()));
             CreateMap<CpuMetric, CpuMetricDto>().ForMember(tm => tm.Time, 
                                 time => time.MapFrom(t => DateTimeOffset.FromUnixTimeSeconds(t.Time)));
-            CreateMap<CpuMetricUpdateRequest, CpuMetric>().ForMember(dbModel => dbModel.Time, 
-                                              o => o.MapFrom(t => t.Time.ToUnixTimeSeconds()));
-            CreateMap<CpuMetric, CpuMetricUpdateRequest>().ForMember(tm => tm.Time, 
-                                time => time.MapFrom(t => DateTimeOffset.FromUnixTimeSeconds(t.Time)));
             CreateMap<CpuMetricCreateRequest, CpuMetric>().ForMember(dbModel => dbModel.Time,
                                               o => o.MapFrom(t => t.Time.ToUnixTimeSeconds()));
             CreateMap<CpuMetric, CpuMetricCreateRequest>().ForMember(tm => tm.Time,

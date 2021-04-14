@@ -40,13 +40,17 @@ namespace MetricsAgent
                                            // подсказываем где искать классы с миграциями
                                            .ScanIn(typeof(Startup).Assembly).For.Migrations()).AddLogging(lb => lb
                                            .AddFluentMigratorConsole());
-            //services.AddHostedService<QuartzHostedService>();
             services.AddSingleton(new SQLiteConnection(SQLSettings.ConnectionString));
+
+            // Инициализация репозиториев
             services.AddSingleton<ICpuMetricsRepository, CpuMetricsRepository>();
             services.AddSingleton<IDotNetMetricsRepository, DotNetMetricsRepository>();
             services.AddSingleton<IHddMetricsRepository, HddMetricsRepository>();
             services.AddSingleton<INetworkMetricsRepository, NetworkMetricsRepository>();
             services.AddSingleton<IRamMetricsRepository, RamMetricsRepository>();
+
+            // Создание фоновых задач по снятию метрик
+            services.AddHostedService<QuartzHostedService>();
             services.AddSingleton<IJobFactory, SingletonJobFactory>();
             services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
             services.AddSingleton<CpuMetricJob>();
@@ -69,7 +73,6 @@ namespace MetricsAgent
             services.AddSingleton(new JobSchedule(
                                   jobType: typeof(RamMetricJob),
                                   cronExpression: "0/5 * * * * ?")); 
-            services.AddHostedService<QuartzHostedService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MetricsAgent", Version = "v1" });

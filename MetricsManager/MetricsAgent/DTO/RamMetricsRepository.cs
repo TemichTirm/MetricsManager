@@ -34,24 +34,6 @@ namespace MetricsAgent.DTO
                new { value = item.Value, time = item.Time });
             }
         }
-
-        public void Delete(int metricId)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            {
-                connection.Execute("DELETE FROM rammetrics WHERE id=@id", new { id = metricId });
-            }
-        }
-
-        public void Update(RamMetric item)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            {
-               connection.Execute("UPDATE rammetrics SET value = @value, time = @time WHERE id=@id;",
-               new { value = item.Value, time = item.Time, id = item.Id });
-            }
-        }
-
         public IList<RamMetric> GetAll()
         {
             using (var connection = new SQLiteConnection(_connection))
@@ -59,16 +41,6 @@ namespace MetricsAgent.DTO
                 return connection.Query<RamMetric>("SELECT Id, Time, Value FROM rammetrics").ToList();
             }
         }
-
-        public RamMetric GetById(int metricId)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            {
-               return connection.QuerySingle<RamMetric>("SELECT Id, Time, Value FROM rammetrics WHERE id = @id",
-               new { id = metricId });
-            }
-        }
-
         public IList<RamMetric> GetByTimePeriod(long getFromTime, long getToTime)
         {
             using (var connection = new SQLiteConnection(_connection))
