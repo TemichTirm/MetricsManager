@@ -1,4 +1,5 @@
-﻿using MetricsAgent.DTO;
+﻿using AutoMapper;
+using MetricsAgent.DTO;
 using MetricsAgent.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,13 +13,16 @@ namespace MetricsAgent.Controllers
     public class HddMetricsController : ControllerBase
     {
         private readonly ILogger<HddMetricsController> _logger;
-        private IHddMetricsRepository _repository;
-        private readonly DateTimeOffset baseTime = new (new(2000, 01, 01));
-        public HddMetricsController(IHddMetricsRepository repository, ILogger<HddMetricsController> logger)
+        private readonly IHddMetricsRepository _repository;
+        private readonly IMapper _mapper;
+
+        public HddMetricsController(IHddMetricsRepository repository, ILogger<HddMetricsController> logger,
+                                    IMapper mapper)
         {
             _logger = logger;
             _logger.LogDebug(1, "HddMetricsController created");
             _repository = repository;
+            _mapper = mapper;
         }
         /// <summary>
         /// Возвращает по запросу оставшееся пространство на HDD в указанный промежуток времени
@@ -30,19 +34,14 @@ namespace MetricsAgent.Controllers
         public IActionResult GetHddMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
             _logger.LogTrace(1, $"Query GetHddMetrics with params: FromTime={fromTime}, ToTime={toTime}");
-            var metrics = _repository.GetByTimePeriod((fromTime - baseTime).TotalSeconds, (toTime - baseTime).TotalSeconds);
+            var metrics = _repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds());
             var response = new SelectByTimePeriodHddMetricsResponse()
             {
                 Metrics = new List<HddMetricDto>()
             };
             foreach (var metric in metrics)
             {
-                response.Metrics.Add(new HddMetricDto
-                {
-                    Time = baseTime.AddSeconds(metric.Time),
-                    Value = metric.Value,
-                    Id = metric.Id
-                });
+                response.Metrics.Add(_mapper.Map<HddMetricDto>(metric));
             }
             return Ok(response);
         }

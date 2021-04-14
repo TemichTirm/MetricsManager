@@ -39,3 +39,5 @@ C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\bin\Debug\net5.0\NLog.Extensions.Logging.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\bin\Debug\net5.0\NLog.Web.AspNetCore.dll
 C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\bin\Debug\net5.0\Dapper.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\Temich\source\repos\Web API MicroService\MetricsManager\MetricsManager\MetricsAgent\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

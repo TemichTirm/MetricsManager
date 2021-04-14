@@ -10,9 +10,9 @@ namespace MetricsManagerTests
 {
     public class AgentsControllerUnitTest
     {
-        private AgentsController controller;
-        private Mock<ILogger<AgentsController>> mockLogger;
-        private List<AgentInfo> agents = new List<AgentInfo>();
+        private readonly AgentsController controller;
+        private readonly Mock<ILogger<AgentsController>> mockLogger;
+        private readonly List<AgentInfo> agents = new();
 
         public AgentsControllerUnitTest()
         {
