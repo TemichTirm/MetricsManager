@@ -35,21 +35,6 @@ namespace MetricsAgentTests
         }
 
         [Fact]
-        public void Create_ShouldCall_Create_From_Repository()
-        {
-            // устанавливаем параметр заглушки
-            // в заглушке прописываем что в репозиторий прилетит CpuMetric объект
-            _mockRepository.Setup(repository => repository.Create(It.IsAny<CpuMetric>())).Verifiable();
-
-            // выполняем действие на контроллере
-            var result = _controller.Create(new MetricsAgent.Requests.CpuMetricCreateRequest { Time = new (new(2020,02,04)), Value = 50 });
-
-            // проверяем заглушку на то, что пока работал контроллер
-            // действительно вызвался метод Create репозитория с нужным типом объекта в параметре
-            _mockRepository.Verify(repository => repository.Create(It.IsAny<CpuMetric>()), Times.AtMostOnce());
-        }
-
-        [Fact]
         public void GetAll_ShouldCall_GetAll_From_Repository()
         {
             _mockRepository.Setup(repository => repository.GetAll()).Returns(new List<CpuMetric>()).Verifiable();
