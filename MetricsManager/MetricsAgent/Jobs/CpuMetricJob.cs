@@ -1,5 +1,4 @@
 ﻿using MetricsAgent.DTO;
-using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using System;
 using System.Diagnostics;
@@ -11,13 +10,11 @@ namespace MetricsAgent.Jobs
     public class CpuMetricJob : IJob
     {
         // Инжектируем DI провайдер
-        private readonly IServiceProvider _provider;
         private readonly ICpuMetricsRepository _repository;
         private readonly PerformanceCounter _cpuCounter;
-        public CpuMetricJob(IServiceProvider provider)
+        public CpuMetricJob(ICpuMetricsRepository repository)
         {
-            _provider = provider;
-            _repository = _provider.GetService<ICpuMetricsRepository>();
+            _repository = repository;
             _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         }
         public Task Execute(IJobExecutionContext context)

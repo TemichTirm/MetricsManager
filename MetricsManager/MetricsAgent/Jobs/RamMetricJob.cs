@@ -11,15 +11,12 @@ namespace MetricsAgent.Jobs
     public class RamMetricJob : IJob
     {
         // Инжектируем DI провайдер
-        private readonly IServiceProvider _provider;
         private readonly IRamMetricsRepository _repository;
         private readonly PerformanceCounter _ramCounter;
-        public RamMetricJob(IServiceProvider provider)
+        public RamMetricJob(IRamMetricsRepository repository)
         {
-            _provider = provider;
-            _repository = _provider.GetService<IRamMetricsRepository>();
+            _repository = repository;
             _ramCounter = new PerformanceCounter("Memory", "Available MBytes");
-
         }
         public Task Execute(IJobExecutionContext context)
         {

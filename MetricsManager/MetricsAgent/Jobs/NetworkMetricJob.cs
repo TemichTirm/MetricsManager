@@ -7,20 +7,17 @@ using System.Threading.Tasks;
 
 namespace MetricsAgent.Jobs
 {
-    //[DisallowConcurrentExecution]
+    [DisallowConcurrentExecution]
     public class NetworkMetricJob : IJob
     {
         // Инжектируем DI провайдер
-        private readonly IServiceProvider _provider;
         private readonly INetworkMetricsRepository _repository;
         private readonly PerformanceCounter[] _networkCounters;
 
-        public NetworkMetricJob(IServiceProvider provider)
+        public NetworkMetricJob(INetworkMetricsRepository repository)
         {
-            _provider = provider;
-            _repository = _provider.GetService<INetworkMetricsRepository>();
-            var Category = new PerformanceCounterCategory("Network Interface");
-            string[] instanceNames = Category.GetInstanceNames();
+            _repository = repository;
+            string[] instanceNames = new PerformanceCounterCategory("Network Interface").GetInstanceNames();
             _networkCounters = new PerformanceCounter[instanceNames.Length];
             int count = 0;
             foreach (var instance in instanceNames)
@@ -31,7 +28,6 @@ namespace MetricsAgent.Jobs
         }
         public Task Execute(IJobExecutionContext context)
         {
-
             int totalBytesRecieved = 0;
             foreach (var item in _networkCounters)
             {

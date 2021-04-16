@@ -4,6 +4,7 @@ using MetricsAgent;
 using MetricsAgent.Controllers;
 using MetricsAgent.DTO;
 using MetricsAgent.Models;
+using MetricsAgent.Responses;
 using MetricsCommon;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -23,7 +24,7 @@ namespace MetricsAgentTests
         private readonly List<CpuMetric> _initialData;
         private readonly DateTimeOffset fromTime = new(new(2020, 01, 01));
         private readonly DateTimeOffset toTime = new(new(2020, 12, 31));
-        private readonly Percentile percentile = Percentile.P99;
+        private readonly Percentile percentile = Percentile.P75;
 
         public CpuMetricsControllerUnitTest()
         {
@@ -47,13 +48,21 @@ namespace MetricsAgentTests
         {
             _mockRepository.Setup(repository => repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds()))
                                 .Returns(_initialData).Verifiable();
-            var result = _controller.GetCpuMetrics(fromTime, toTime);
+            var result = (OkObjectResult)_controller.GetCpuMetrics(fromTime, toTime);
+            var actualResult = ((SelectByTimePeriodCpuMetricsResponse)result.Value).Metrics;
             _mockRepository.Verify(repository => repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds())
-                                    , Times.AtMostOnce());
+                                    ,Times.AtMostOnce());
+            for (int i = 0; i < _initialData.Count; i++)
+            {
+                Assert.Equal(_initialData[i].Value, actualResult[i].Value);
+                Assert.Equal(_initialData[i].Id, actualResult[i].Id);
+                Assert.Equal(_initialData[i].Time, actualResult[i].Time.ToUnixTimeSeconds());
+
+            }
         }
 
         [Fact]
-        public void GetCpuMetricsByPercentile_ReturnsOk()
+        public void GetCpuMetricsByPercentile__ShouldCall_GetByTimePeriod_From_Repository()
         {
             _mockRepository.Setup(repository => repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds()))
                                 .Returns(_initialData).Verifiable();

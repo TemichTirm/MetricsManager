@@ -11,13 +11,11 @@ namespace MetricsAgent.Jobs
     public class HddMetricJob : IJob
     {
         // Инжектируем DI провайдер
-        private readonly IServiceProvider _provider;
         private readonly IHddMetricsRepository _repository;
         private readonly PerformanceCounter _hddCounter;
-        public HddMetricJob(IServiceProvider provider)
+        public HddMetricJob(IHddMetricsRepository repository)
         {
-            _provider = provider;
-            _repository = _provider.GetService<IHddMetricsRepository>();
+            _repository = repository;
             _hddCounter = new PerformanceCounter("PhysicalDisk", "% Disk Time", "_Total");
         }
         public Task Execute(IJobExecutionContext context)
