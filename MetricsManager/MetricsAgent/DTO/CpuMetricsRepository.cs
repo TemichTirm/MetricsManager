@@ -44,25 +44,6 @@ namespace MetricsAgent.DTO
             }
         }
 
-        public void Delete(int metricId)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            // прописываем в команду SQL запрос на удаление данных
-            {
-                connection.Execute("DELETE FROM cpumetrics WHERE id=@id", new { id = metricId });
-            }
-        }
-
-        public void Update(CpuMetric item)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            {
-                // прописываем в команду SQL запрос на обновление данных
-                connection.Execute("UPDATE cpumetrics SET value = @value, time = @time WHERE id=@id;",
-                     new { value = item.Value, time = item.Time, id = item.Id });
-            }
-        }
-
         public IList<CpuMetric> GetAll()
         {
             using (var connection = new SQLiteConnection(_connection))
@@ -72,23 +53,7 @@ namespace MetricsAgent.DTO
                 // в соответсвии с названиями колонок
                 return connection.Query<CpuMetric>("SELECT id, time, value FROM cpumetrics").ToList();
             }
-        }        
-
-        public CpuMetric GetById(int metricId)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            {
-                try
-                {
-                    return connection.QuerySingle<CpuMetric>("SELECT * FROM cpumetrics WHERE id = @id",
-                    new { id = metricId });
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
-            }
-        }
+        }   
         public IList<CpuMetric> GetByTimePeriod (long getFromTime, long getToTime)
         {
             using (var connection = new SQLiteConnection(_connection))

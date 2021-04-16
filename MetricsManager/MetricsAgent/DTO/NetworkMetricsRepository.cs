@@ -33,38 +33,11 @@ namespace MetricsAgent.DTO
                 new { value = item.Value, time = item.Time });
             }
         }
-
-        public void Delete(int metricId)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            {
-                connection.Execute("DELETE FROM networkmetrics WHERE id=@id", new { id = metricId });
-            }
-        }
-
-        public void Update(NetworkMetric item)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            {
-                connection.Execute("UPDATE networkmetrics SET value = @value, time = @time WHERE id=@id;",
-                new { value = item.Value, time = item.Time, id = item.Id });
-            }
-        }
-
         public IList<NetworkMetric> GetAll()
         {
             using (var connection = new SQLiteConnection(_connection))
             {
                 return connection.Query<NetworkMetric>("SELECT Id, Time, Value FROM networkmetrics").ToList();
-            }
-        }
-
-        public NetworkMetric GetById(int metricId)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            {
-                return connection.QuerySingle<NetworkMetric>("SELECT Id, Time, Value FROM networkmetrics WHERE id = @id",
-                new { id = metricId });
             }
         }
         public IList<NetworkMetric> GetByTimePeriod(long getFromTime, long getToTime)

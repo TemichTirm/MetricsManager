@@ -50,6 +50,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "AutoFixture": {
+              "target": "Package",
+              "version": "[4.16.0, )"
+            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[16.7.1, )"
@@ -152,6 +156,22 @@
               "target": "Package",
               "version": "[2.0.78, )"
             },
+            "FluentMigrator": {
+              "target": "Package",
+              "version": "[3.2.15, )"
+            },
+            "FluentMigrator.Runner": {
+              "target": "Package",
+              "version": "[3.2.15, )"
+            },
+            "FluentMigrator.Runner.SQLite": {
+              "target": "Package",
+              "version": "[3.2.15, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
             "NLog": {
               "target": "Package",
               "version": "[4.7.9, )"
@@ -160,6 +180,10 @@
               "target": "Package",
               "version": "[4.11.0, )"
             },
+            "Quartz": {
+              "target": "Package",
+              "version": "[3.3.1, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
@@ -167,6 +191,10 @@
             "System.Data.SQLite.Core": {
               "target": "Package",
               "version": "[1.0.113.7, )"
+            },
+            "System.Diagnostics.PerformanceCounter": {
+              "target": "Package",
+              "version": "[5.0.1, )"
             }
           },
           "imports": [
@@ -232,6 +260,16 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Quartz": {
+              "target": "Package",
+              "version": "[3.3.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

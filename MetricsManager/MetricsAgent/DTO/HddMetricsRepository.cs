@@ -14,7 +14,6 @@ namespace MetricsAgent.DTO
     {
 
     }
-
     public class HddMetricsRepository : IHddMetricsRepository
     {
         // наше соединение с базой данных
@@ -25,7 +24,6 @@ namespace MetricsAgent.DTO
         {
             _connection = connection;
         }
-
         public void Create(HddMetric item)
         {
             using (var connection = new SQLiteConnection(_connection))
@@ -34,38 +32,11 @@ namespace MetricsAgent.DTO
                 new { value = item.Value, time = item.Time });
             }
         }
-
-        public void Delete(int metricId)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            {
-                connection.Execute("DELETE FROM hddmetrics WHERE id=@id", new { id = metricId });
-            }
-        }
-
-        public void Update(HddMetric item)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            {
-                connection.Execute("UPDATE hddmetrics SET value = @value, time = @time WHERE id=@id;",
-                new { value = item.Value, time = item.Time, id = item.Id });
-            }
-        }
-
         public IList<HddMetric> GetAll()
         {
             using (var connection = new SQLiteConnection(_connection))
             {
                 return connection.Query<HddMetric>("SELECT Id, Time, Value FROM hddmetrics").ToList();
-            }
-        }
-
-        public HddMetric GetById(int metricId)
-        {
-            using (var connection = new SQLiteConnection(_connection))
-            {
-               return connection.QuerySingle<HddMetric>("SELECT Id, Time, Value FROM hddmetrics WHERE id = @id",
-               new { id = metricId });
             }
         }
         public IList<HddMetric> GetByTimePeriod (long getFromTime, long getToTime)

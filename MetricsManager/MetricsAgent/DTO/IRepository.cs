@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MetricsAgent.DTO
 {
     public interface IRepository<T> where T : class
     {
         IList<T> GetAll();
-        T GetById(int id);
-        void Create(T item);
-        void Update(T item);
-        void Delete(int id);
+        void Create(T item);        
         IList<T> GetByTimePeriod(long fromTime, long toTime);
     }
 }

@@ -7,9 +7,8 @@ namespace MetricsAgent.Responses
     {
         public List<CpuMetricDto> Metrics { get; set; }
     }
-    public class SelectByTimePeriodCpuMetricsResponse
+    public class SelectByTimePeriodCpuMetricsResponse : AllCpuMetricsResponse
     {
-        public List<CpuMetricDto> Metrics { get; set; }
     }
     public class CpuMetricDto
     {
