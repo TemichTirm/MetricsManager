@@ -29,15 +29,6 @@ namespace MetricsAgent.Controllers
             _mapper = mapper;
         }
         
-
-        [HttpPost("create")]
-        public IActionResult Create([FromBody] CpuMetricCreateRequest request)
-        {
-            _logger.LogTrace(1, $"Query Create Metric with params: Value={request.Value}, Time={request.Time}");
-            _repository.Create(_mapper.Map<CpuMetric>(request));
-            return Ok();
-        }
-        
         [HttpGet("all")]
         public IActionResult GetAll()
         {
