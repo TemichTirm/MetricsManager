@@ -9,8 +9,11 @@ namespace MetricsAgent.Responses
         public int Value { get; set; }
         public int Id { get; set; }
     }
-    public class SelectByTimePeriodRamMetricsResponse
+    public class AllRamMetricsResponse
     {
         public List<RamMetricDto> Metrics { get; set; }
+    }
+    public class SelectByTimePeriodRamMetricsResponse : AllRamMetricsResponse
+    {
     }
 }

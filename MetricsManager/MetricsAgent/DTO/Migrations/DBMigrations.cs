@@ -20,7 +20,6 @@ namespace MetricsAgent.DTO.Migrations
                       .WithColumn(_settingsSQL[AgentFields.Id]).AsInt64().PrimaryKey().Identity()
                       .WithColumn(_settingsSQL[AgentFields.Value]).AsInt32()
                       .WithColumn(_settingsSQL[AgentFields.Time]).AsInt64();
-
             }
         }
         public override void Down()

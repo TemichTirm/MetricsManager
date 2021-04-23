@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using MetricsAgent.DTO;
-using MetricsAgent.Models;
-using MetricsAgent.Requests;
 using MetricsAgent.Responses;
-using MetricsCommon;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MetricsAgent.Controllers
 {
@@ -28,7 +24,11 @@ namespace MetricsAgent.Controllers
             _repository = repository;
             _mapper = mapper;
         }
-        
+
+        /// <summary>
+        /// Возвращает по запросу все метрики загрузки CPU за всё время наблюдения
+        /// </summary>       
+        /// <returns>Загрузка CPU (в процентах)</returns>
         [HttpGet("all")]
         public IActionResult GetAll()
         {
@@ -47,7 +47,7 @@ namespace MetricsAgent.Controllers
         /// </summary>
         /// <param name="fromTime">Начальное время</param>
         /// <param name="toTime">Конечное время</param>
-        /// <returns>Метрики использования CPU (в процентах)</returns>
+        /// <returns>Загрузка CPU (в процентах)</returns>
         [HttpGet("from/{fromTime}/to/{toTime}")]
         public IActionResult GetCpuMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
@@ -64,46 +64,6 @@ namespace MetricsAgent.Controllers
             return Ok(response);
         }
 
-        /// <summary>
-        /// Возвращает по запросу метрики использования CPU в указанный промежуток времени и заданным перцентилем
-        /// </summary>
-        /// <param name="fromTime">Начальное время</param>
-        /// <param name="toTime">Конечное время</param>
-        /// <param name="percentile">Значение перцентиля</param>
-        /// <returns>Метрики использования CPU (перцентиль)</returns>
-        [HttpGet("from/{fromTime}/to/{toTime}/percentiles/{percentile}")]
-        public IActionResult GetCpuMetricsByPercentile([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime,
-            [FromRoute] Percentile percentile)
-        {
-            _logger.LogTrace($"Query GetCpuMetrics with params: FromTime={fromTime}, ToTime={toTime}, Percentile={percentile}");
-            var orderedMetrics = _repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds())
-                                     .OrderBy(metrics => metrics.Value);
-            if (!orderedMetrics.Any())
-            { 
-                return null; 
-            }
-            int index = 0;
-            switch (percentile)
-            {
-                case Percentile.Median:
-                    index = (int)(orderedMetrics.Count() / 2);
-                    break;
-                case Percentile.P75:
-                    index = (int)(orderedMetrics.Count() * 0.75);
-                    break;
-                case Percentile.P90:
-                    index = (int)(orderedMetrics.Count() * 0.90);
-                    break;
-                case Percentile.P95:
-                    index = (int)(orderedMetrics.Count() * 0.95);
-                    break;
-                case Percentile.P99:
-                    index = (int)(orderedMetrics.Count() * 0.99);
-                    break;
-            }
-            var response = _mapper.Map<CpuMetricDto>(orderedMetrics.ElementAt(index));            
-            return Ok(response);
-        }
     }
   
 

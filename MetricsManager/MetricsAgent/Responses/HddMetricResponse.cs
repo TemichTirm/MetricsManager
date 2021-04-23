@@ -9,8 +9,11 @@ namespace MetricsAgent.Responses
         public int Value { get; set; }
         public int Id { get; set; }
     }
-    public class SelectByTimePeriodHddMetricsResponse
+    public class AllHddMetricsResponse
     {
         public List<HddMetricDto> Metrics { get; set; }
+    }
+    public class SelectByTimePeriodHddMetricsResponse : AllHddMetricsResponse
+    {
     }
 }

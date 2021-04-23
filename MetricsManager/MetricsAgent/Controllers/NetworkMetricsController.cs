@@ -25,11 +25,27 @@ namespace MetricsAgent.Controllers
             _mapper = mapper;
         }
         /// <summary>
-        /// Возвращает по запросу сетевые метрики в указанный промежуток времени
+        /// Возвращает по запросу всё количество байт полученных сетевыми адаптерами
+        /// </summary>       
+        /// <returns>Получено байт</returns>
+        [HttpGet("all")]
+        public IActionResult GetAll()
+        {
+            _logger.LogTrace(1, $"Query GetAll Metrics without params");
+            var metrics = _repository.GetAll();
+            var response = new AllNetworkMetricsResponse() { Metrics = new List<NetworkMetricDto>() };
+            foreach (var metric in metrics)
+            {
+                response.Metrics.Add(_mapper.Map<NetworkMetricDto>(metric));
+            }
+            return Ok(response);
+        }
+        /// <summary>
+        /// Возвращает по запросу количество байт полученных сетевыми адаптерами в указанный промежуток времени
         /// </summary>
         /// <param name="fromTime">Начальное время</param>
         /// <param name="toTime">Конечное время</param>
-        /// <returns>Сетевые метрики</returns>
+        /// <returns>Получено байт</returns>
         [HttpGet("from/{fromTime}/to/{toTime}")]
         public IActionResult GetNetworkMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {

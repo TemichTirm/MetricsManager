@@ -33,7 +33,7 @@ namespace MetricsManager
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.UseStartup<Startup>();
+                webBuilder.UseStartup<Startup>().UseUrls("http://localhost:5050");
             })
             .ConfigureLogging(logging =>
             {

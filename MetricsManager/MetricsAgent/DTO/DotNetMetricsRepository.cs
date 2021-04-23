@@ -27,8 +27,8 @@ namespace MetricsAgent.DTO
             {
                 using (var connection = new SQLiteConnection(SQLSettings.ConnectionString))
                 {
-                    connection.Execute("INSERT INTO dotnetmetrics(value, time) VALUES(@value, @time)",
-                    new { value = item.Value, time = item.Time });
+                    connection.Execute($"INSERT INTO {Tables.DotNetMetrics}({AgentFields.Value}, {AgentFields.Time}) VALUES(@value, @time)",
+                                                        new { value = item.Value, time = item.Time });
                 }
             }
             catch (Exception) { }
@@ -37,15 +37,16 @@ namespace MetricsAgent.DTO
         {
             using (var connection = new SQLiteConnection(SQLSettings.ConnectionString))
             {
-                return connection.Query<DotNetMetric>("SELECT Id, Time, Value FROM dotnetmetrics").ToList();
+                return connection.Query<DotNetMetric>($"SELECT * FROM {Tables.DotNetMetrics}").ToList();
             }            
         }
         public IList<DotNetMetric> GetByTimePeriod(long getFromTime, long getToTime)
         {
             using (var connection = new SQLiteConnection(SQLSettings.ConnectionString))
             {
-                return connection.Query<DotNetMetric>("SELECT * FROM dotnetmetrics WHERE (time>=@fromTime) AND (time<=@toTime)",
-                new { fromTime = getFromTime, toTime = getToTime }).ToList();
+                return connection.Query<DotNetMetric>($"SELECT * FROM {Tables.DotNetMetrics} " +
+                                                      $"WHERE ({AgentFields.Time} > @fromTime) AND ({AgentFields.Time} <= @toTime)",
+                                                        new { fromTime = getFromTime, toTime = getToTime }).ToList();
             }
         }
     }

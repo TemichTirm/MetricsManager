@@ -22,8 +22,8 @@ namespace MetricsAgent.DTO
             {
                 using (var connection = new SQLiteConnection(SQLSettings.ConnectionString))
                 {
-                    connection.Execute("INSERT INTO hddmetrics(value, time) VALUES(@value, @time)",
-                    new { value = item.Value, time = item.Time });
+                    connection.Execute($"INSERT INTO {Tables.HddMetrics}({AgentFields.Value}, {AgentFields.Time}) VALUES(@value, @time)",
+                                                       new { value = item.Value, time = item.Time });
                 }
             }
             catch (Exception) { }
@@ -32,15 +32,16 @@ namespace MetricsAgent.DTO
         {
             using (var connection = new SQLiteConnection(SQLSettings.ConnectionString))
             {
-                return connection.Query<HddMetric>("SELECT Id, Time, Value FROM hddmetrics").ToList();
+                return connection.Query<HddMetric>($"SELECT * FROM {Tables.HddMetrics}").ToList();
             }
         }
         public IList<HddMetric> GetByTimePeriod (long getFromTime, long getToTime)
         {
             using (var connection = new SQLiteConnection(SQLSettings.ConnectionString))
             {
-                return connection.Query<HddMetric>("SELECT * FROM hddmetrics WHERE (time>=@fromTime) AND (time<=@toTime)",
-                new { fromTime = getFromTime, toTime = getToTime }).ToList();
+                return connection.Query<HddMetric>($"SELECT * FROM {Tables.HddMetrics} " +
+                                                   $"WHERE ({AgentFields.Time} > @fromTime) AND ({AgentFields.Time} <= @toTime)",
+                                                    new { fromTime = getFromTime, toTime = getToTime }).ToList();
             }
         }
     }

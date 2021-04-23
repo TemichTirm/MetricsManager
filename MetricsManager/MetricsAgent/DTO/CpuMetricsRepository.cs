@@ -13,7 +13,6 @@ namespace MetricsAgent.DTO
     // необходим, чтобы проверить работу репозитория на тесте-заглушке
     public interface ICpuMetricsRepository : IRepository<CpuMetric>
     {
-
     }
 
     public class CpuMetricsRepository : ICpuMetricsRepository
@@ -25,17 +24,8 @@ namespace MetricsAgent.DTO
             {
                 using (var connection = new SQLiteConnection(SQLSettings.ConnectionString))
                 {
-                    // запрос на вставку данных с плейсхолдерами для параметров
-                    connection.Execute("INSERT INTO cpumetrics(value, time) VALUES(@value, @time)",
-                    // анонимный объект с параметрами запроса
-                    new
-                    {
-                        // value подставится на место "@value" в строке запроса
-                        // значение запишется из поля Value объекта item
-                        value = item.Value,
-                        // записываем в поле time количество секунд
-                        time = item.Time
-                    });
+                    connection.Execute($"INSERT INTO {Tables.CpuMetrics}({AgentFields.Value}, {AgentFields.Time}) VALUES(@value, @time)",
+                                                        new { value = item.Value, time = item.Time });
                 }
             }
             catch (Exception) { }          
@@ -45,18 +35,16 @@ namespace MetricsAgent.DTO
         {
             using (var connection = new SQLiteConnection(SQLSettings.ConnectionString))
             {
-                // читаем при помощи Query и в шаблон подставляем тип данных
-                // объект которого Dapper сам и заполнит его поля
-                // в соответсвии с названиями колонок
-                return connection.Query<CpuMetric>("SELECT id, time, value FROM cpumetrics").ToList();
+                return connection.Query<CpuMetric>($"SELECT * FROM {Tables.CpuMetrics}").ToList();
             }
         }   
         public IList<CpuMetric> GetByTimePeriod (long getFromTime, long getToTime)
         {
             using (var connection = new SQLiteConnection(SQLSettings.ConnectionString))
             {
-                return connection.Query<CpuMetric>("SELECT * FROM cpumetrics WHERE (time>=@fromTime) AND (time<=@toTime)",
-                    new { fromTime = getFromTime, toTime = getToTime }).ToList();
+                return connection.Query<CpuMetric>($"SELECT * FROM {Tables.CpuMetrics} " +
+                                                   $"WHERE ({AgentFields.Time} > @fromTime) AND ({AgentFields.Time} <= @toTime)",
+                                                    new { fromTime = getFromTime, toTime = getToTime }).ToList();
             }
         }
     }

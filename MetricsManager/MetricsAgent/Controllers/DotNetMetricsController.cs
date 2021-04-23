@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace MetricsAgent.Controllers
 {
-    [Route("api/dotnetMetrics/errors-count")]
+    [Route("api/dotnetMetrics")]
     [ApiController]
     public class DotNetMetricsController : ControllerBase
     {
@@ -25,11 +25,27 @@ namespace MetricsAgent.Controllers
             _mapper = mapper;
         }
         /// <summary>
-        /// Возвращает по запросу метрики работы .Net в указанный промежуток времени
+        /// Возвращает по запросу объем памяти в куче за всё время наблюдения
+        /// </summary>       
+        /// <returns>Объем памяти в куче (KByte)</returns>
+        [HttpGet("all")]
+        public IActionResult GetAll()
+        {
+            _logger.LogTrace(1, $"Query GetAll Metrics without params");
+            var metrics = _repository.GetAll();
+            var response = new AllDotNetMetricsResponse() { Metrics = new List<DotNetMetricDto>() };
+            foreach (var metric in metrics)
+            {
+                response.Metrics.Add(_mapper.Map<DotNetMetricDto>(metric));
+            }
+            return Ok(response);
+        }
+        /// <summary>
+        /// Возвращает по запросу объем памяти в куче в указанный промежуток времени
         /// </summary>
         /// <param name="fromTime">Начальное время</param>
         /// <param name="toTime">Конечное время</param>
-        /// <returns>Метрики работы .Net</returns>
+        /// <returns>Объем памяти в куче (KByte)</returns>
         [HttpGet("from/{fromTime}/to/{toTime}")]
         public IActionResult GetDotNetMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {

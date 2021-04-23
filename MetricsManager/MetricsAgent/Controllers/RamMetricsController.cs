@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace MetricsAgent.Controllers
 {
-    [Route("api/ramMetrics/available")]
+    [Route("api/ramMetrics")]
     [ApiController]
     public class RamMetricsController : ControllerBase
     {
@@ -25,9 +25,27 @@ namespace MetricsAgent.Controllers
             _mapper = mapper;
         }
         /// <summary>
-        /// Возвращает по запросу размер доступной оперативной памяти
+        /// Возвращает по запросу все значения доступной оперативной памяти 
+        /// </summary>       
+        /// <returns>Размер доступной оперативной памяти (MBytes)</returns>
+        [HttpGet("all")]
+        public IActionResult GetAll()
+        {
+            _logger.LogTrace(1, $"Query GetAll Metrics without params");
+            var metrics = _repository.GetAll();
+            var response = new AllRamMetricsResponse() { Metrics = new List<RamMetricDto>() };
+            foreach (var metric in metrics)
+            {
+                response.Metrics.Add(_mapper.Map<RamMetricDto>(metric));
+            }
+            return Ok(response);
+        }
+        /// <summary>
+        /// Возвращает по запросу размер доступной оперативной памяти в указанный промежуток времени
         /// </summary>
-        /// <returns>Размер доступной оперативной памяти</returns>
+        /// <param name="fromTime">Начальное время</param>
+        /// <param name="toTime">Конечное время</param>
+        /// <returns>Размер доступной оперативной памяти (MBytes)</returns>
         [HttpGet("from/{fromTime}/to/{toTime}")]
         public IActionResult GetRamMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {

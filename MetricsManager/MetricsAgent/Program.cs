@@ -33,8 +33,8 @@ namespace MetricsAgent
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.UseStartup<Startup>();
-            })
+                webBuilder.UseStartup<Startup>().UseUrls("http://localhost:5000");
+            })            
             .ConfigureLogging(logging =>
             {
                 logging.ClearProviders(); // создание провайдеров логирования

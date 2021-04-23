@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace MetricsAgent.Jobs
 {
-    [DisallowConcurrentExecution]
     public class NetworkMetricJob : IJob
     {
         // Инжектируем DI провайдер

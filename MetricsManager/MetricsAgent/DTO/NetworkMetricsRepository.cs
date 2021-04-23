@@ -22,8 +22,8 @@ namespace MetricsAgent.DTO
             {
                 using (var connection = new SQLiteConnection(SQLSettings.ConnectionString))
                 {
-                    connection.Execute("INSERT INTO networkmetrics(value, time) VALUES(@value, @time)",
-                    new { value = item.Value, time = item.Time });
+                    connection.Execute($"INSERT INTO {Tables.NetworkMetrics}({AgentFields.Value}, {AgentFields.Time}) VALUES(@value, @time)",
+                                                        new { value = item.Value, time = item.Time });
                 }
             }
             catch (Exception) { }
@@ -32,15 +32,16 @@ namespace MetricsAgent.DTO
         {
             using (var connection = new SQLiteConnection(SQLSettings.ConnectionString))
             {
-                return connection.Query<NetworkMetric>("SELECT Id, Time, Value FROM networkmetrics").ToList();
+                return connection.Query<NetworkMetric>($"SELECT * FROM {Tables.NetworkMetrics}").ToList();
             }
         }
         public IList<NetworkMetric> GetByTimePeriod(long getFromTime, long getToTime)
         {
             using (var connection = new SQLiteConnection(SQLSettings.ConnectionString))
             {
-                return connection.Query<NetworkMetric>("SELECT * FROM networkmetrics WHERE (time>=@fromTime) AND (time<=@toTime)",
-                new { fromTime = getFromTime, toTime = getToTime }).ToList();
+                return connection.Query<NetworkMetric>($"SELECT * FROM {Tables.NetworkMetrics} " +
+                                                       $"WHERE ({AgentFields.Time} > @fromTime) AND ({AgentFields.Time} <= @toTime)",
+                                                        new { fromTime = getFromTime, toTime = getToTime }).ToList();
             }
         }
     }

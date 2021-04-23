@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace MetricsAgent.Controllers
 {
-    [Route("api/hddMetrics/left")]
+    [Route("api/hddMetrics")]
     [ApiController]
     public class HddMetricsController : ControllerBase
     {
@@ -25,11 +25,27 @@ namespace MetricsAgent.Controllers
             _mapper = mapper;
         }
         /// <summary>
-        /// Возвращает по запросу оставшееся пространство на HDD в указанный промежуток времени
+        /// Возвращает по запросу все значения % загрузки HDD
+        /// </summary>       
+        /// <returns>Время загрузки HDD (%)</returns>
+        [HttpGet("all")]
+        public IActionResult GetAll()
+        {
+            _logger.LogTrace(1, $"Query GetAll Metrics without params");
+            var metrics = _repository.GetAll();
+            var response = new AllHddMetricsResponse() { Metrics = new List<HddMetricDto>() };
+            foreach (var metric in metrics)
+            {
+                response.Metrics.Add(_mapper.Map<HddMetricDto>(metric));
+            }
+            return Ok(response);
+        }
+        /// <summary>
+        /// Возвращает по запросу % загрузки HDD указанный промежуток времени
         /// </summary>
         /// <param name="fromTime">Начальное время</param>
         /// <param name="toTime">Конечное время</param>
-        /// <returns>Оставшееся пространство на HDD</returns>
+        /// <returns>Время загрузки HDD (%)</returns>
         [HttpGet("from/{fromTime}/to/{toTime}")]
         public IActionResult GetHddMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
