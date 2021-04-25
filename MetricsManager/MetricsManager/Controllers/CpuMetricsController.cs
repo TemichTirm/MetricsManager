@@ -107,6 +107,12 @@ namespace MetricsManager.Controllers
                                             .OrderBy(metrics => metrics.Value);
             return Ok(GetPercentile(orderedMetrics.ToList(), percentile));
         }
+        /// <summary>
+        /// Поиск значения метрики сзаданным персентилем
+        /// </summary>
+        /// <param name="orderedMetrics">Список метрик отсортированных по значению</param>
+        /// <param name="percentile">Значение персентиля</param>
+        /// <returns></returns>
         private static int GetPercentile(List<CpuMetric> orderedMetrics, Percentile percentile)
         {
             if (!orderedMetrics.Any())

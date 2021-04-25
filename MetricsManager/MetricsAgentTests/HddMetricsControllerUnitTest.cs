@@ -1,7 +1,11 @@
+using AutoFixture;
 using AutoMapper;
+using MetricsAgent;
 using MetricsAgent.Controllers;
 using MetricsAgent.DTO;
 using MetricsAgent.Models;
+using MetricsAgent.Responses;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
@@ -15,28 +19,47 @@ namespace MetricsAgentTests
         private readonly HddMetricsController _controller;
         private readonly Mock<IHddMetricsRepository> _mockRepository;
         private readonly Mock<ILogger<HddMetricsController>> _mockLogger;
-        private readonly Mock<IMapper> _mockMapper;
-        private readonly DateTimeOffset fromTime = new(new(2020, 01, 01));
-        private readonly DateTimeOffset toTime = new(new(2020, 12, 31));
+        private readonly List<HddMetric> _initialData;
+        private readonly IMapper _mapper;
 
         public HddMetricsControllerUnitTest()
         {
             _mockRepository = new Mock<IHddMetricsRepository>();
             _mockLogger = new Mock<ILogger<HddMetricsController>>();
-            _mockMapper = new Mock<IMapper>();
-            _controller = new HddMetricsController(_mockRepository.Object, _mockLogger.Object, _mockMapper.Object);
+            _mapper = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile())).CreateMapper();
+            _controller = new HddMetricsController(_mockRepository.Object, _mockLogger.Object, _mapper);
+            _initialData = new Fixture().Create<List<HddMetric>>();
         }
 
         [Fact]
+        public void GetAll_ShouldCall_GetAll_From_Repository()
+        {
+            _mockRepository.Setup(repository => repository.GetAll()).Returns(_initialData).Verifiable();
+            var result = (OkObjectResult)_controller.GetAll();
+            var actualResult = ((AllHddMetricsResponse)result.Value).Metrics;
+            _mockRepository.Verify(repository => repository.GetAll(), Times.AtLeastOnce());
+            for (int i = 0; i < _initialData.Count; i++)
+            {
+                Assert.Equal(_initialData[i].Value, actualResult[i].Value);
+                Assert.Equal(_initialData[i].Id, actualResult[i].Id);
+                Assert.Equal(_initialData[i].Time, actualResult[i].Time.ToUnixTimeSeconds());
+            }
+        }
+        [Fact]
         public void GetByTimePeriod_ShouldCall_GetByTimePeriod_From_Repository()
         {
-            _mockRepository.Setup(repository => 
-                                 repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds())).
-                                 Returns(new List<HddMetric>()).Verifiable();
-            var result = _controller.GetHddMetrics(fromTime, toTime);
-            _mockRepository.Verify(repository => 
-                                  repository.GetByTimePeriod(fromTime.ToUnixTimeSeconds(), toTime.ToUnixTimeSeconds()), 
-                                  Times.AtMostOnce());
+            _mockRepository.Setup(repository => repository.GetByTimePeriod(It.IsAny<long>(), It.IsAny<long>()))
+                                   .Returns(_initialData).Verifiable();
+            var result = (OkObjectResult)_controller.GetHddMetrics(It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>());
+            var actualResult = ((SelectByTimePeriodHddMetricsResponse)result.Value).Metrics;
+            _mockRepository.Verify(repository => repository.GetByTimePeriod(It.IsAny<long>(), It.IsAny<long>()),
+                                                                            Times.AtMostOnce());
+            for (int i = 0; i < _initialData.Count; i++)
+            {
+                Assert.Equal(_initialData[i].Value, actualResult[i].Value);
+                Assert.Equal(_initialData[i].Id, actualResult[i].Id);
+                Assert.Equal(_initialData[i].Time, actualResult[i].Time.ToUnixTimeSeconds());
+            }
         }
     }
 }

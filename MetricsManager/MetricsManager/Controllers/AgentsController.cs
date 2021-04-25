@@ -1,9 +1,7 @@
-﻿using MetricsCommon.SQL_Settings;
-using MetricsManager.DAL;
+﻿using MetricsManager.DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 
 namespace MetricsManager.Controllers
 {
